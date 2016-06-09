@@ -6,6 +6,7 @@
 package rgbcontrol;
 
 import java.awt.Color;
+import java.util.Random;
 
 
 
@@ -54,6 +55,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 /**
  * VARIÁVEIS ABAIXO
  */
+Random rand=new Random();
+    
 Cor led1_color;
 Cor led2_color;    
 
@@ -144,10 +147,10 @@ led2_color.definirCor(0,0,0);
         led2_bPanel = new javax.swing.JPanel();
         led2_rPanel = new javax.swing.JPanel();
         led2_gPanel = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        led2_favorite = new javax.swing.JButton();
         led2_colorPanel = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        led2_random = new javax.swing.JButton();
+        led2_clone = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -227,6 +230,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 250.0;
         jPanel2.add(led1_gSlider, gridBagConstraints);
 
+        led1_bPanel.setBackground(new java.awt.Color(0, 0, 0));
         led1_bPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 204), 2, true));
         led1_bPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -249,6 +253,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel2.add(led1_bPanel, gridBagConstraints);
 
+        led1_rPanel.setBackground(new java.awt.Color(0, 0, 0));
         led1_rPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
         led1_rPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -271,6 +276,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel2.add(led1_rPanel, gridBagConstraints);
 
+        led1_gPanel.setBackground(new java.awt.Color(0, 0, 0));
         led1_gPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 2, true));
         led1_gPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -294,6 +300,12 @@ led2_color.definirCor(0,0,0);
         jPanel2.add(led1_gPanel, gridBagConstraints);
 
         led1_favorite.setText("ADD FAVORITE");
+        led1_favorite.setEnabled(false);
+        led1_favorite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led1_favoriteActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -301,6 +313,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(led1_favorite, gridBagConstraints);
 
+        led1_colorPanel.setBackground(new java.awt.Color(0, 0, 0));
         led1_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         led1_colorPanel.setPreferredSize(new java.awt.Dimension(100, 20));
 
@@ -323,6 +336,7 @@ led2_color.definirCor(0,0,0);
         jPanel2.add(led1_colorPanel, gridBagConstraints);
 
         led1_random.setText("RANDOM");
+        led1_random.setEnabled(false);
         led1_random.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 led1_randomActionPerformed(evt);
@@ -336,6 +350,7 @@ led2_color.definirCor(0,0,0);
         jPanel2.add(led1_random, gridBagConstraints);
 
         led1_clone.setText("CLONE LED2");
+        led1_clone.setEnabled(false);
         led1_clone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 led1_cloneActionPerformed(evt);
@@ -655,6 +670,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 250.0;
         jPanel13.add(led2_gSlider, gridBagConstraints);
 
+        led2_bPanel.setBackground(new java.awt.Color(0, 0, 0));
         led2_bPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 204), 2, true));
         led2_bPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -677,6 +693,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel13.add(led2_bPanel, gridBagConstraints);
 
+        led2_rPanel.setBackground(new java.awt.Color(0, 0, 0));
         led2_rPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
         led2_rPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -699,6 +716,7 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel13.add(led2_rPanel, gridBagConstraints);
 
+        led2_gPanel.setBackground(new java.awt.Color(0, 0, 0));
         led2_gPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 2, true));
         led2_gPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
@@ -721,14 +739,21 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel13.add(led2_gPanel, gridBagConstraints);
 
-        jButton7.setText("ADD FAVORITE");
+        led2_favorite.setText("ADD FAVORITE");
+        led2_favorite.setEnabled(false);
+        led2_favorite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led2_favoriteActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jButton7, gridBagConstraints);
+        jPanel13.add(led2_favorite, gridBagConstraints);
 
+        led2_colorPanel.setBackground(new java.awt.Color(0, 0, 0));
         led2_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         led2_colorPanel.setPreferredSize(new java.awt.Dimension(100, 20));
 
@@ -750,21 +775,33 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(led2_colorPanel, gridBagConstraints);
 
-        jButton8.setText("RANDOM");
+        led2_random.setText("RANDOM");
+        led2_random.setEnabled(false);
+        led2_random.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led2_randomActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jButton8, gridBagConstraints);
+        jPanel13.add(led2_random, gridBagConstraints);
 
-        jButton9.setText("CLONE LED1");
+        led2_clone.setText("CLONE LED1");
+        led2_clone.setEnabled(false);
+        led2_clone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led2_cloneActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jButton9, gridBagConstraints);
+        jPanel13.add(led2_clone, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -809,7 +846,10 @@ led2_color.definirCor(0,0,0);
     private void led1_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_checkBoxStateChanged
 led1_rSlider.setEnabled(led1_checkBox.isSelected());
 led1_gSlider.setEnabled(led1_checkBox.isSelected()); 
-led1_bSlider.setEnabled(led1_checkBox.isSelected()); 
+led1_bSlider.setEnabled(led1_checkBox.isSelected());
+led1_clone.setEnabled(led1_checkBox.isSelected());
+led1_random.setEnabled(led1_checkBox.isSelected());
+led1_favorite.setEnabled(led1_checkBox.isSelected());
     }//GEN-LAST:event_led1_checkBoxStateChanged
 
     private void led1_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_rSliderStateChanged
@@ -834,6 +874,9 @@ led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),
 led2_rSlider.setEnabled(led2_checkBox.isSelected());
 led2_gSlider.setEnabled(led2_checkBox.isSelected()); 
 led2_bSlider.setEnabled(led2_checkBox.isSelected()); 
+led2_clone.setEnabled(led2_checkBox.isSelected());
+led2_random.setEnabled(led2_checkBox.isSelected());
+led2_favorite.setEnabled(led2_checkBox.isSelected());
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
@@ -855,12 +898,40 @@ led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),
     }//GEN-LAST:event_led2_bSliderStateChanged
 
     private void led1_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_cloneActionPerformed
-        // TODO add your handling code here:
+led1_color.definirCor(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB());        
+led1_rSlider.setValue(led1_color.pegarR());
+led1_gSlider.setValue(led1_color.pegarG());
+led1_bSlider.setValue(led1_color.pegarB());
     }//GEN-LAST:event_led1_cloneActionPerformed
 
     private void led1_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_randomActionPerformed
-        // TODO add your handling code here:
+led1_color.definirCor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
+led1_rSlider.setValue(led1_color.pegarR());
+led1_gSlider.setValue(led1_color.pegarG());
+led1_bSlider.setValue(led1_color.pegarB());
     }//GEN-LAST:event_led1_randomActionPerformed
+  
+    private void led1_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_favoriteActionPerformed
+
+    }//GEN-LAST:event_led1_favoriteActionPerformed
+
+    private void led2_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_cloneActionPerformed
+led2_color.definirCor(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB());
+led2_rSlider.setValue(led2_color.pegarR());
+led2_gSlider.setValue(led2_color.pegarG());
+led2_bSlider.setValue(led2_color.pegarB());
+    }//GEN-LAST:event_led2_cloneActionPerformed
+
+    private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
+led2_color.definirCor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
+led2_rSlider.setValue(led2_color.pegarR());
+led2_gSlider.setValue(led2_color.pegarG());
+led2_bSlider.setValue(led2_color.pegarB());
+    }//GEN-LAST:event_led2_randomActionPerformed
+
+    private void led2_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_favoriteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_led2_favoriteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -899,9 +970,6 @@ led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
@@ -956,10 +1024,13 @@ led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),
     private javax.swing.JPanel led2_bPanel;
     private javax.swing.JSlider led2_bSlider;
     private javax.swing.JCheckBox led2_checkBox;
+    private javax.swing.JButton led2_clone;
     private javax.swing.JPanel led2_colorPanel;
+    private javax.swing.JButton led2_favorite;
     private javax.swing.JPanel led2_gPanel;
     private javax.swing.JSlider led2_gSlider;
     private javax.swing.JPanel led2_rPanel;
     private javax.swing.JSlider led2_rSlider;
+    private javax.swing.JButton led2_random;
     // End of variables declaration//GEN-END:variables
 }
