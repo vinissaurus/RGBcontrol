@@ -20,10 +20,17 @@ import java.util.Enumeration;
 
 
 public class SerialComm implements SerialPortEventListener {
+    static String serialCommMessage="";
+    
+    public static void printMessage(String s){
+    serialCommMessage+="\n"+s;
+        System.out.println(s);
+    }
+    
 	SerialPort serialPort;
         /** The port we're normally going to use. */
 	private static final String PORT_NAMES[] = {
-            "COM1","COM2","COM3","COM4","COM5","COM6","COM7" // Windows
+            "COM3","COM8","COM9" // Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -57,7 +64,7 @@ public class SerialComm implements SerialPortEventListener {
 			}
 		}
 		if (portId == null) {
-			System.out.println("Could not find COM port.");
+			printMessage("Could not find COM port.");
 			return;
 		}
 
@@ -80,7 +87,7 @@ public class SerialComm implements SerialPortEventListener {
 			serialPort.addEventListener(this);
 			serialPort.notifyOnDataAvailable(true);
 		} catch (Exception e) {
-			System.err.println(e.toString());
+			printMessage(e.toString());
 		}
 	}
 
@@ -102,9 +109,9 @@ public class SerialComm implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				System.out.println(inputLine);
+				printMessage(inputLine);
 			} catch (Exception e) {
-				System.err.println(e.toString());
+				printMessage(e.toString());
 			}
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
@@ -121,6 +128,6 @@ public class SerialComm implements SerialPortEventListener {
 			}
 		};
 		t.start();
-		System.out.println("Started");
+		printMessage("Started");
 	}
 }

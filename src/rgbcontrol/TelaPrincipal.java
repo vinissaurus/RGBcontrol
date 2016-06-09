@@ -5,8 +5,26 @@
  */
 package rgbcontrol;
 
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 import java.awt.Color;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.Random;
+import javax.swing.JFrame;
 
 
 
@@ -51,15 +69,28 @@ return b;
 }
 }
 
-public class TelaPrincipal extends javax.swing.JFrame {
+public class TelaPrincipal extends JFrame implements SerialPortEventListener, MouseListener, WindowListener, ComponentListener {
 /**
  * VARIÁVEIS ABAIXO
  */
+
 Random rand=new Random();
-    
+
+private InputStream    serialIn;
+private OutputStream   serialOut;
+private BufferedReader serialReader;
+SerialPort serialPort;
+
 Cor led1_color;
 Cor led2_color;    
 
+String message="";//String destinada ao uso de mensagens no console
+
+public void message(String s){
+message+=s+"\n";
+consoleOut.setText(message);
+    System.out.println("message+="+s);
+}
 
 public void iniciarVariaveis(){
 led1_color = new Cor();
@@ -67,6 +98,9 @@ led1_color.definirCor(0,0,0);
 
 led2_color = new Cor();
 led2_color.definirCor(0,0,0);
+
+
+
 }
 
 
@@ -76,8 +110,46 @@ led2_color.definirCor(0,0,0);
     public TelaPrincipal() {
         initComponents();
         iniciarVariaveis();
+        
+        message("Ports found:");
+		@SuppressWarnings("unchecked")
+		Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers();
+		while(ports.hasMoreElements()){
+			CommPortIdentifier port = ports.nextElement(); 
+			message("\tPORT: "+port.getName());
+		}
+		
+		message( "Starting console..." );
+		
+
+		
+        
+        try{abrirPorta();}
+        catch(Exception e){
+        message(e.toString());
+        }
     }
 
+    	/**
+	 * Show Console
+	 * 
+	 * Show window and open the serial port
+	 * 
+	 * @throws Exception In fail case like: NoSuchPortException, PortInUseException, UnsupportedCommOperationException 
+	 */
+	public void abrirPorta() throws Exception{
+		
+	CommPortIdentifier port = CommPortIdentifier.getPortIdentifier("COM9"); 
+        CommPort commPort = port.open(this.getClass().getName(),2000);
+        serialPort = (SerialPort) commPort;
+        serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+		serialIn=serialPort.getInputStream();
+		serialOut=serialPort.getOutputStream();
+		serialReader = new BufferedReader( new InputStreamReader(serialIn) );
+        serialPort.addEventListener(this);
+        serialPort.notifyOnDataAvailable(true);
+        
+	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,6 +223,8 @@ led2_color.definirCor(0,0,0);
         led2_colorPanel = new javax.swing.JPanel();
         led2_random = new javax.swing.JButton();
         led2_clone = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        consoleOut = new javax.swing.JTextArea();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -803,26 +877,30 @@ led2_color.definirCor(0,0,0);
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(led2_clone, gridBagConstraints);
 
+        consoleOut.setEditable(false);
+        consoleOut.setBackground(new java.awt.Color(0, 0, 0));
+        consoleOut.setColumns(20);
+        consoleOut.setFont(new java.awt.Font("Monospaced", 1, 12)); // NOI18N
+        consoleOut.setForeground(new java.awt.Color(153, 204, 0));
+        consoleOut.setRows(5);
+        jScrollPane2.setViewportView(consoleOut);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -830,13 +908,15 @@ led2_color.definirCor(0,0,0);
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
 
         pack();
@@ -969,6 +1049,7 @@ led2_bSlider.setValue(led2_color.pegarB());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea consoleOut;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox4;
@@ -1009,6 +1090,7 @@ led2_bSlider.setValue(led2_color.pegarB());
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel led1_bPanel;
     private javax.swing.JSlider led1_bSlider;
@@ -1033,4 +1115,97 @@ led2_bSlider.setValue(led2_color.pegarB());
     private javax.swing.JSlider led2_rSlider;
     private javax.swing.JButton led2_random;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void serialEvent(SerialPortEvent e) {
+//        throw new UnsupportedOperationException("Not supported yet."); 
+        	message("serialEvent: "+e.toString());
+		try {
+			String line = serialReader.readLine();
+			message("READ from serial: "+line);
+			
+		} catch (IOException ex) {
+			message(ex.toString());
+		}
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
