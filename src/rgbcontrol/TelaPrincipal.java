@@ -55,12 +55,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
  * VARIÁVEIS ABAIXO
  */
 Cor led1_color;
-    
+Cor led2_color;    
 
 
 public void iniciarVariaveis(){
 led1_color = new Cor();
 led1_color.definirCor(0,0,0);
+
+led2_color = new Cor();
+led2_color.definirCor(0,0,0);
 }
 
 
@@ -92,10 +95,10 @@ led1_color.definirCor(0,0,0);
         led1_bPanel = new javax.swing.JPanel();
         led1_rPanel = new javax.swing.JPanel();
         led1_gPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        led1_favorite = new javax.swing.JButton();
         led1_colorPanel = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        led1_random = new javax.swing.JButton();
+        led1_clone = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -134,15 +137,15 @@ led1_color.definirCor(0,0,0);
         jCheckBox4 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
-        led2Enabled = new javax.swing.JCheckBox();
-        jSlider7 = new javax.swing.JSlider();
-        jSlider8 = new javax.swing.JSlider();
-        jSlider9 = new javax.swing.JSlider();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
-        jPanel16 = new javax.swing.JPanel();
+        led2_checkBox = new javax.swing.JCheckBox();
+        led2_rSlider = new javax.swing.JSlider();
+        led2_bSlider = new javax.swing.JSlider();
+        led2_gSlider = new javax.swing.JSlider();
+        led2_bPanel = new javax.swing.JPanel();
+        led2_rPanel = new javax.swing.JPanel();
+        led2_gPanel = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
-        jPanel17 = new javax.swing.JPanel();
+        led2_colorPanel = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
 
@@ -290,13 +293,13 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.weighty = 20.0;
         jPanel2.add(led1_gPanel, gridBagConstraints);
 
-        jButton1.setText("ADD FAVORITE");
+        led1_favorite.setText("ADD FAVORITE");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jButton1, gridBagConstraints);
+        jPanel2.add(led1_favorite, gridBagConstraints);
 
         led1_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         led1_colorPanel.setPreferredSize(new java.awt.Dimension(100, 20));
@@ -319,21 +322,31 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(led1_colorPanel, gridBagConstraints);
 
-        jButton5.setText("RANDOM");
+        led1_random.setText("RANDOM");
+        led1_random.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led1_randomActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jButton5, gridBagConstraints);
+        jPanel2.add(led1_random, gridBagConstraints);
 
-        jButton6.setText("CLONE LED2");
+        led1_clone.setText("CLONE LED2");
+        led1_clone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led1_cloneActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jButton6, gridBagConstraints);
+        jPanel2.add(led1_clone, gridBagConstraints);
 
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel11.setLayout(new java.awt.GridBagLayout());
@@ -585,51 +598,74 @@ led1_color.definirCor(0,0,0);
         jPanel13.setPreferredSize(new java.awt.Dimension(200, 180));
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
-        led2Enabled.setText("Enabled");
+        led2_checkBox.setText("Enabled");
+        led2_checkBox.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                led2_checkBoxStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        jPanel13.add(led2Enabled, gridBagConstraints);
+        jPanel13.add(led2_checkBox, gridBagConstraints);
 
-        jSlider7.setMaximum(255);
-        jSlider7.setValue(0);
+        led2_rSlider.setMaximum(255);
+        led2_rSlider.setValue(0);
+        led2_rSlider.setEnabled(false);
         led1_rSlider.setValue(0);
+        led2_rSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                led2_rSliderStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 250.0;
-        jPanel13.add(jSlider7, gridBagConstraints);
+        jPanel13.add(led2_rSlider, gridBagConstraints);
 
-        jSlider8.setMaximum(255);
-        jSlider8.setValue(0);
+        led2_bSlider.setMaximum(255);
+        led2_bSlider.setValue(0);
+        led2_bSlider.setEnabled(false);
+        led2_bSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                led2_bSliderStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 250.0;
-        jPanel13.add(jSlider8, gridBagConstraints);
+        jPanel13.add(led2_bSlider, gridBagConstraints);
 
-        jSlider9.setMaximum(255);
-        jSlider9.setValue(0);
+        led2_gSlider.setMaximum(255);
+        led2_gSlider.setValue(0);
+        led2_gSlider.setEnabled(false);
+        led2_gSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                led2_gSliderStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 250.0;
-        jPanel13.add(jSlider9, gridBagConstraints);
+        jPanel13.add(led2_gSlider, gridBagConstraints);
 
-        jPanel14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 204), 2, true));
-        jPanel14.setPreferredSize(new java.awt.Dimension(20, 20));
+        led2_bPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 204), 2, true));
+        led2_bPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout led2_bPanelLayout = new javax.swing.GroupLayout(led2_bPanel);
+        led2_bPanel.setLayout(led2_bPanelLayout);
+        led2_bPanelLayout.setHorizontalGroup(
+            led2_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        led2_bPanelLayout.setVerticalGroup(
+            led2_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 16, Short.MAX_VALUE)
         );
 
@@ -639,19 +675,19 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 20.0;
         gridBagConstraints.weighty = 20.0;
-        jPanel13.add(jPanel14, gridBagConstraints);
+        jPanel13.add(led2_bPanel, gridBagConstraints);
 
-        jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
-        jPanel15.setPreferredSize(new java.awt.Dimension(20, 20));
+        led2_rPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
+        led2_rPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout led2_rPanelLayout = new javax.swing.GroupLayout(led2_rPanel);
+        led2_rPanel.setLayout(led2_rPanelLayout);
+        led2_rPanelLayout.setHorizontalGroup(
+            led2_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        led2_rPanelLayout.setVerticalGroup(
+            led2_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 16, Short.MAX_VALUE)
         );
 
@@ -661,19 +697,19 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 20.0;
         gridBagConstraints.weighty = 20.0;
-        jPanel13.add(jPanel15, gridBagConstraints);
+        jPanel13.add(led2_rPanel, gridBagConstraints);
 
-        jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 2, true));
-        jPanel16.setPreferredSize(new java.awt.Dimension(20, 20));
+        led2_gPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 2, true));
+        led2_gPanel.setPreferredSize(new java.awt.Dimension(20, 20));
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout led2_gPanelLayout = new javax.swing.GroupLayout(led2_gPanel);
+        led2_gPanel.setLayout(led2_gPanelLayout);
+        led2_gPanelLayout.setHorizontalGroup(
+            led2_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        led2_gPanelLayout.setVerticalGroup(
+            led2_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 16, Short.MAX_VALUE)
         );
 
@@ -683,7 +719,7 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 20.0;
         gridBagConstraints.weighty = 20.0;
-        jPanel13.add(jPanel16, gridBagConstraints);
+        jPanel13.add(led2_gPanel, gridBagConstraints);
 
         jButton7.setText("ADD FAVORITE");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -693,17 +729,17 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(jButton7, gridBagConstraints);
 
-        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel17.setPreferredSize(new java.awt.Dimension(100, 20));
+        led2_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        led2_colorPanel.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout led2_colorPanelLayout = new javax.swing.GroupLayout(led2_colorPanel);
+        led2_colorPanel.setLayout(led2_colorPanelLayout);
+        led2_colorPanelLayout.setHorizontalGroup(
+            led2_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        led2_colorPanelLayout.setVerticalGroup(
+            led2_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 18, Short.MAX_VALUE)
         );
 
@@ -712,7 +748,7 @@ led1_color.definirCor(0,0,0);
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(jPanel17, gridBagConstraints);
+        jPanel13.add(led2_colorPanel, gridBagConstraints);
 
         jButton8.setText("RANDOM");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -794,6 +830,38 @@ led1_color.definirB(led1_bSlider.getValue());
 led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),led1_color.pegarB()));
     }//GEN-LAST:event_led1_bSliderStateChanged
 
+    private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
+led2_rSlider.setEnabled(led2_checkBox.isSelected());
+led2_gSlider.setEnabled(led2_checkBox.isSelected()); 
+led2_bSlider.setEnabled(led2_checkBox.isSelected()); 
+    }//GEN-LAST:event_led2_checkBoxStateChanged
+
+    private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
+led2_rPanel.setBackground(new Color(led2_rSlider.getValue(),0,0));    
+led2_color.definirR(led2_rSlider.getValue());
+led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+    }//GEN-LAST:event_led2_rSliderStateChanged
+
+    private void led2_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_gSliderStateChanged
+led2_gPanel.setBackground(new Color(0,led2_gSlider.getValue(),0));
+led2_color.definirG(led2_gSlider.getValue());
+led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+    }//GEN-LAST:event_led2_gSliderStateChanged
+
+    private void led2_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_bSliderStateChanged
+led2_bPanel.setBackground(new Color(0,0,led2_bSlider.getValue()));
+led2_color.definirB(led2_bSlider.getValue());
+led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+    }//GEN-LAST:event_led2_bSliderStateChanged
+
+    private void led1_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_cloneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_led1_cloneActionPerformed
+
+    private void led1_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_randomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_led1_randomActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -830,10 +898,7 @@ led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -874,24 +939,27 @@ led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider jSlider7;
-    private javax.swing.JSlider jSlider8;
-    private javax.swing.JSlider jSlider9;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel led1_bPanel;
     private javax.swing.JSlider led1_bSlider;
     private javax.swing.JCheckBox led1_checkBox;
+    private javax.swing.JButton led1_clone;
     private javax.swing.JPanel led1_colorPanel;
+    private javax.swing.JButton led1_favorite;
     private javax.swing.JPanel led1_gPanel;
     private javax.swing.JSlider led1_gSlider;
     private javax.swing.JPanel led1_rPanel;
     private javax.swing.JSlider led1_rSlider;
-    private javax.swing.JCheckBox led2Enabled;
+    private javax.swing.JButton led1_random;
+    private javax.swing.JPanel led2_bPanel;
+    private javax.swing.JSlider led2_bSlider;
+    private javax.swing.JCheckBox led2_checkBox;
+    private javax.swing.JPanel led2_colorPanel;
+    private javax.swing.JPanel led2_gPanel;
+    private javax.swing.JSlider led2_gSlider;
+    private javax.swing.JPanel led2_rPanel;
+    private javax.swing.JSlider led2_rSlider;
     // End of variables declaration//GEN-END:variables
 }
