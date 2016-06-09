@@ -26,83 +26,95 @@ import java.util.Enumeration;
 import java.util.Random;
 import javax.swing.JFrame;
 
-
-
 /**
  *
  * @author Vinicius-Desktop
  */
+class Cor {
 
-class Cor{
-private int r;
-private int g;
-private int b;
+    private int r;
+    private int g;
+    private int b;
 
-public void definirCor(int r, int g, int b){
-this.r=r;
-this.g=g;
-this.b=b;
-}
+    public void definirCor(int r, int g, int b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
 
-public void definirR(int r){
-this.r=r;
-}
+    public void definirR(int r) {
+        this.r = r;
+    }
 
-public void definirG(int g){
-this.g=g;
-}
+    public void definirG(int g) {
+        this.g = g;
+    }
 
-public void definirB(int b){
-this.b=b;
-}
+    public void definirB(int b) {
+        this.b = b;
+    }
 
-public int pegarR(){
-return r;
-}
+    public int pegarR() {
+        return r;
+    }
 
-public int pegarG(){
-return g;
-}
+    public int pegarG() {
+        return g;
+    }
 
-public int pegarB(){
-return b;
-}
+    public int pegarB() {
+        return b;
+    }
 }
 
 public class TelaPrincipal extends JFrame implements SerialPortEventListener, MouseListener, WindowListener, ComponentListener {
-/**
- * VARIÁVEIS ABAIXO
- */
 
-Random rand=new Random();
+    /**
+     * VARIÁVEIS ABAIXO
+     */
 
-private InputStream    serialIn;
-private OutputStream   serialOut;
-private BufferedReader serialReader;
-SerialPort serialPort;
+    Random rand = new Random();
 
-Cor led1_color;
-Cor led2_color;    
+    private BufferedReader input;
+    /**
+     * The output stream to the port
+     */
+    private OutputStream output;
+    /**
+     * Milliseconds to block while waiting for port open
+     */
+    private static final int TIME_OUT = 6000;
+    /**
+     * Default bits per second for COM port.
+     */
+    private static final int DATA_RATE = 9600;
+    SerialPort serialPort;
 
-String message="";//String destinada ao uso de mensagens no console
+    Cor led1_color;
+    Cor led2_color;
 
-public void message(String s){
-message+=s+"\n";
-consoleOut.setText(message);
-    System.out.println("message+="+s);
-}
+    private static final String PORT_NAMES[] = {
+        "/dev/tty.usbserial-A9007UX1", // Mac OS X
+        "/dev/ttyACM0", // Raspberry Pi
+        "/dev/ttyUSB0", // Linux
+        "COM9" // Windows
+    };
+    String message = "";//String destinada ao uso de mensagens no console
 
-public void iniciarVariaveis(){
-led1_color = new Cor();
-led1_color.definirCor(0,0,0);
+    public void message(String s) {
+        message += s + "\n";
+        consoleOut.setText(message);
+        System.out.println("message+=" + s);
+    }
 
-led2_color = new Cor();
-led2_color.definirCor(0,0,0);
+    public void iniciarVariaveis() {
+        led1_color = new Cor();
+        led1_color.definirCor(0, 0, 0);
 
+        led2_color = new Cor();
+        led2_color.definirCor(0, 0, 0);
 
-
-}
-
+    }
 
     /**
      * Creates new form TelaPrincipal
@@ -110,46 +122,64 @@ led2_color.definirCor(0,0,0);
     public TelaPrincipal() {
         initComponents();
         iniciarVariaveis();
-        
-        message("Ports found:");
-		@SuppressWarnings("unchecked")
-		Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers();
-		while(ports.hasMoreElements()){
-			CommPortIdentifier port = ports.nextElement(); 
-			message("\tPORT: "+port.getName());
-		}
-		
-		message( "Starting console..." );
-		
 
-		
-        
-        try{abrirPorta();}
-        catch(Exception e){
-        message(e.toString());
+    }
+
+    /**
+     * Show Console
+     *
+     * Show window and open the serial port
+     *
+     * @throws Exception In fail case like: NoSuchPortException,
+     * PortInUseException, UnsupportedCommOperationException
+     */
+    public void abrirPorta() {
+        // the next line is for Raspberry Pi and 
+        // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
+        //System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+
+        CommPortIdentifier portId = null;
+        Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
+
+        //First, Find an instance of serial port as set in PORT_NAMES.
+        while (portEnum.hasMoreElements()) {
+            CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
+            for (String portName : PORT_NAMES) {
+                if (currPortId.getName().equals(portName)) {
+                    portId = currPortId;
+                    break;
+                }
+            }
+        }
+        if (portId == null) {
+            System.out.println("Could not find COM port.");
+            return;
+        }
+
+        try {
+            // open serial port, and use class name for the appName.
+            serialPort = (SerialPort) portId.open(this.getClass().getName(),
+                    TIME_OUT);
+
+            // set port parameters
+            serialPort.setSerialPortParams(DATA_RATE,
+                    SerialPort.DATABITS_8,
+                    SerialPort.STOPBITS_1,
+                    SerialPort.PARITY_NONE);
+
+            // open the streams
+            input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
+            output = serialPort.getOutputStream();
+
+            // add event listeners
+            serialPort.addEventListener(this);
+            serialPort.notifyOnDataAvailable(true);
+        } catch (Exception e) {
+            System.out.println("What exception?");
+            System.err.println(e.toString());
         }
     }
 
-    	/**
-	 * Show Console
-	 * 
-	 * Show window and open the serial port
-	 * 
-	 * @throws Exception In fail case like: NoSuchPortException, PortInUseException, UnsupportedCommOperationException 
-	 */
-	public void abrirPorta() throws Exception{
-		
-	CommPortIdentifier port = CommPortIdentifier.getPortIdentifier("COM9"); 
-        CommPort commPort = port.open(this.getClass().getName(),2000);
-        serialPort = (SerialPort) commPort;
-        serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-		serialIn=serialPort.getInputStream();
-		serialOut=serialPort.getOutputStream();
-		serialReader = new BufferedReader( new InputStreamReader(serialIn) );
-        serialPort.addEventListener(this);
-        serialPort.notifyOnDataAvailable(true);
-        
-	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -924,95 +954,109 @@ led2_color.definirCor(0,0,0);
     }// </editor-fold>//GEN-END:initComponents
 
     private void led1_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_checkBoxStateChanged
-led1_rSlider.setEnabled(led1_checkBox.isSelected());
-led1_gSlider.setEnabled(led1_checkBox.isSelected()); 
-led1_bSlider.setEnabled(led1_checkBox.isSelected());
-led1_clone.setEnabled(led1_checkBox.isSelected());
-led1_random.setEnabled(led1_checkBox.isSelected());
-led1_favorite.setEnabled(led1_checkBox.isSelected());
+        led1_rSlider.setEnabled(led1_checkBox.isSelected());
+        led1_gSlider.setEnabled(led1_checkBox.isSelected());
+        led1_bSlider.setEnabled(led1_checkBox.isSelected());
+        led1_clone.setEnabled(led1_checkBox.isSelected());
+        led1_random.setEnabled(led1_checkBox.isSelected());
+        led1_favorite.setEnabled(led1_checkBox.isSelected());
     }//GEN-LAST:event_led1_checkBoxStateChanged
 
     private void led1_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_rSliderStateChanged
-led1_rPanel.setBackground(new Color(led1_rSlider.getValue(),0,0));    
-led1_color.definirR(led1_rSlider.getValue());
-led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),led1_color.pegarB()));
+        led1_rPanel.setBackground(new Color(led1_rSlider.getValue(), 0, 0));
+        led1_color.definirR(led1_rSlider.getValue());
+        led1_colorPanel.setBackground(new Color(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB()));
     }//GEN-LAST:event_led1_rSliderStateChanged
 
     private void led1_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_gSliderStateChanged
-led1_gPanel.setBackground(new Color(0,led1_gSlider.getValue(),0));
-led1_color.definirG(led1_gSlider.getValue());
-led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),led1_color.pegarB()));
+        led1_gPanel.setBackground(new Color(0, led1_gSlider.getValue(), 0));
+        led1_color.definirG(led1_gSlider.getValue());
+        led1_colorPanel.setBackground(new Color(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB()));
     }//GEN-LAST:event_led1_gSliderStateChanged
 
     private void led1_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_bSliderStateChanged
-led1_bPanel.setBackground(new Color(0,0,led1_bSlider.getValue()));
-led1_color.definirB(led1_bSlider.getValue());
-led1_colorPanel.setBackground(new Color(led1_color.pegarR(),led1_color.pegarG(),led1_color.pegarB()));
+        led1_bPanel.setBackground(new Color(0, 0, led1_bSlider.getValue()));
+        led1_color.definirB(led1_bSlider.getValue());
+        led1_colorPanel.setBackground(new Color(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB()));
     }//GEN-LAST:event_led1_bSliderStateChanged
 
     private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
-led2_rSlider.setEnabled(led2_checkBox.isSelected());
-led2_gSlider.setEnabled(led2_checkBox.isSelected()); 
-led2_bSlider.setEnabled(led2_checkBox.isSelected()); 
-led2_clone.setEnabled(led2_checkBox.isSelected());
-led2_random.setEnabled(led2_checkBox.isSelected());
-led2_favorite.setEnabled(led2_checkBox.isSelected());
+        led2_rSlider.setEnabled(led2_checkBox.isSelected());
+        led2_gSlider.setEnabled(led2_checkBox.isSelected());
+        led2_bSlider.setEnabled(led2_checkBox.isSelected());
+        led2_clone.setEnabled(led2_checkBox.isSelected());
+        led2_random.setEnabled(led2_checkBox.isSelected());
+        led2_favorite.setEnabled(led2_checkBox.isSelected());
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
-led2_rPanel.setBackground(new Color(led2_rSlider.getValue(),0,0));    
-led2_color.definirR(led2_rSlider.getValue());
-led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+        led2_rPanel.setBackground(new Color(led2_rSlider.getValue(), 0, 0));
+        led2_color.definirR(led2_rSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_color.pegarR(), led2_color.pegarG(), led2_color.pegarB()));
     }//GEN-LAST:event_led2_rSliderStateChanged
 
     private void led2_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_gSliderStateChanged
-led2_gPanel.setBackground(new Color(0,led2_gSlider.getValue(),0));
-led2_color.definirG(led2_gSlider.getValue());
-led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+        led2_gPanel.setBackground(new Color(0, led2_gSlider.getValue(), 0));
+        led2_color.definirG(led2_gSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_color.pegarR(), led2_color.pegarG(), led2_color.pegarB()));
     }//GEN-LAST:event_led2_gSliderStateChanged
 
     private void led2_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_bSliderStateChanged
-led2_bPanel.setBackground(new Color(0,0,led2_bSlider.getValue()));
-led2_color.definirB(led2_bSlider.getValue());
-led2_colorPanel.setBackground(new Color(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB()));
+        led2_bPanel.setBackground(new Color(0, 0, led2_bSlider.getValue()));
+        led2_color.definirB(led2_bSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_color.pegarR(), led2_color.pegarG(), led2_color.pegarB()));
     }//GEN-LAST:event_led2_bSliderStateChanged
 
     private void led1_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_cloneActionPerformed
-led1_color.definirCor(led2_color.pegarR(),led2_color.pegarG(),led2_color.pegarB());        
-led1_rSlider.setValue(led1_color.pegarR());
-led1_gSlider.setValue(led1_color.pegarG());
-led1_bSlider.setValue(led1_color.pegarB());
+        led1_color.definirCor(led2_color.pegarR(), led2_color.pegarG(), led2_color.pegarB());
+        led1_rSlider.setValue(led1_color.pegarR());
+        led1_gSlider.setValue(led1_color.pegarG());
+        led1_bSlider.setValue(led1_color.pegarB());
     }//GEN-LAST:event_led1_cloneActionPerformed
 
     private void led1_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_randomActionPerformed
-led1_color.definirCor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
-led1_rSlider.setValue(led1_color.pegarR());
-led1_gSlider.setValue(led1_color.pegarG());
-led1_bSlider.setValue(led1_color.pegarB());
+        led1_color.definirCor(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+        led1_rSlider.setValue(led1_color.pegarR());
+        led1_gSlider.setValue(led1_color.pegarG());
+        led1_bSlider.setValue(led1_color.pegarB());
     }//GEN-LAST:event_led1_randomActionPerformed
-  
+
     private void led1_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_favoriteActionPerformed
 
     }//GEN-LAST:event_led1_favoriteActionPerformed
 
     private void led2_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_cloneActionPerformed
-led2_color.definirCor(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB());
-led2_rSlider.setValue(led2_color.pegarR());
-led2_gSlider.setValue(led2_color.pegarG());
-led2_bSlider.setValue(led2_color.pegarB());
+        led2_color.definirCor(led1_color.pegarR(), led1_color.pegarG(), led1_color.pegarB());
+        led2_rSlider.setValue(led2_color.pegarR());
+        led2_gSlider.setValue(led2_color.pegarG());
+        led2_bSlider.setValue(led2_color.pegarB());
     }//GEN-LAST:event_led2_cloneActionPerformed
 
     private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
-led2_color.definirCor(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255));
-led2_rSlider.setValue(led2_color.pegarR());
-led2_gSlider.setValue(led2_color.pegarG());
-led2_bSlider.setValue(led2_color.pegarB());
+        led2_color.definirCor(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+        led2_rSlider.setValue(led2_color.pegarR());
+        led2_gSlider.setValue(led2_color.pegarG());
+        led2_bSlider.setValue(led2_color.pegarB());
     }//GEN-LAST:event_led2_randomActionPerformed
 
     private void led2_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_favoriteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_led2_favoriteActionPerformed
 
+    
+    
+    public synchronized void serialEvent(SerialPortEvent oEvent) {
+		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+			try {
+				String inputLine=input.readLine();
+				System.out.println(inputLine);
+			} catch (Exception e) {
+                            System.out.println("Error in sync");
+				System.err.println(e.toString());
+			}
+		}
+		// Ignore all the other eventTypes, but you should consider the other ones.
+	}
     /**
      * @param args the command line arguments
      */
@@ -1116,20 +1160,9 @@ led2_bSlider.setValue(led2_color.pegarB());
     private javax.swing.JButton led2_random;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void serialEvent(SerialPortEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet."); 
-        	message("serialEvent: "+e.toString());
-		try {
-			String line = serialReader.readLine();
-			message("READ from serial: "+line);
-			
-		} catch (IOException ex) {
-			message(ex.toString());
-		}
-    }
 
-    @Override
+  
+
     public void mouseClicked(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
