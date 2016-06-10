@@ -112,7 +112,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 	/** Milliseconds to block while waiting for port open */
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
-	private static final int DATA_RATE = 250000;
+	private static final int DATA_RATE = 115200;
 
 	public void initialize() {
                 // the next line is for Raspberry Pi and 
@@ -180,7 +180,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				message(inputLine);
+				message("BOARD:"+inputLine);
                                 readSerialMessage(inputLine);
                                 
 			} catch (Exception e) {
@@ -1147,6 +1147,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rSlider.setValue(led1_status.getR());
         led1_gSlider.setValue(led1_status.getG());
         led1_bSlider.setValue(led1_status.getB());
+        sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
     }//GEN-LAST:event_led1_randomActionPerformed
 
     private void led1_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_favoriteActionPerformed
@@ -1172,15 +1173,15 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     }//GEN-LAST:event_led2_favoriteActionPerformed
 
     private void led1_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_rSliderMouseReleased
-sendSerialMessage("[r1"+led1_rSlider.getValue()+"]");
+sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
     }//GEN-LAST:event_led1_rSliderMouseReleased
 
     private void led1_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_gSliderMouseReleased
-sendSerialMessage("[g1"+led1_gSlider.getValue()+"]");
+sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
     }//GEN-LAST:event_led1_gSliderMouseReleased
 
     private void led1_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_bSliderMouseReleased
-sendSerialMessage("[b1"+led1_bSlider.getValue()+"]");
+sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
     }//GEN-LAST:event_led1_bSliderMouseReleased
 
     
