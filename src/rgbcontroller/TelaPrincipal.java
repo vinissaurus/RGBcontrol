@@ -112,7 +112,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 	/** Milliseconds to block while waiting for port open */
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
-	private static final int DATA_RATE = 115200;
+	private static final int DATA_RATE = 250000;
 
 	public void initialize() {
                 // the next line is for Raspberry Pi and 
@@ -232,11 +232,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             + "Led2 enabled:"+led2_status.isEnabled()+"\n"
             + "("+led2_status.getR()+","+led2_status.getG()+","+led2_status.getB()+")\n");
     refreshFields();
-    try {
-				output.write("ei".getBytes());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+
     }
     }
     
@@ -262,7 +258,14 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
     }
 
-    
+    public void sendSerialMessage(String s){
+        try {
+		output.write(s.getBytes());
+                message("Sending:"+s);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+    }
     
 
     /**
@@ -383,6 +386,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 led1_rSliderStateChanged(evt);
             }
         });
+        led1_rSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led1_rSliderMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -398,6 +406,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 led1_bSliderStateChanged(evt);
             }
         });
+        led1_bSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led1_bSliderMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -411,6 +424,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_gSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 led1_gSliderStateChanged(evt);
+            }
+        });
+        led1_gSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led1_gSliderMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1152,6 +1170,18 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     private void led2_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_favoriteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_led2_favoriteActionPerformed
+
+    private void led1_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_rSliderMouseReleased
+sendSerialMessage("[r1"+led1_rSlider.getValue()+"]");
+    }//GEN-LAST:event_led1_rSliderMouseReleased
+
+    private void led1_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_gSliderMouseReleased
+sendSerialMessage("[g1"+led1_gSlider.getValue()+"]");
+    }//GEN-LAST:event_led1_gSliderMouseReleased
+
+    private void led1_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_bSliderMouseReleased
+sendSerialMessage("[b1"+led1_bSlider.getValue()+"]");
+    }//GEN-LAST:event_led1_bSliderMouseReleased
 
     
   
