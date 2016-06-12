@@ -3,9 +3,9 @@
 int Rs= 6;
 int Gs= 5;
 int Bs= 3;
-int R = 9;
+int R = 11;
 int G = 10;
-int B = 11;
+int B = 9;
 //variáveis de leitura da EEPROM
 int l1_en=0;
 int l1_r=0;
@@ -20,21 +20,15 @@ int l2_b=0;
 int smoothOn=0;
 int spd=0;
 int testSequence=0;
+int randomMode=0;
 
 String report="";
 String dataIn="";
-//decode_results results;
-//char IRcode[6][4]= {
-//  {'F700FF','F7807F','F740BF','F7C03F'},
-//  {'F720DF','F7A05F','F7609F','F7E01F'},
-//  {'F710EF','F7906F','F750AF','F7D02F'},
-//  {'F730CF','F7B04F','F7708F','F7F00F'},
-//  {'F708F7','F78877','F748B7','F7C837'},
-//  {'F728D7','F7A857','F76897','F7E817'}
-//  };
+String dataOut="";
+
 
 void setup() {
- Serial.begin(9600);
+ Serial.begin(115200);
 
  
  pinMode(Rs,OUTPUT);
@@ -58,12 +52,16 @@ l2_b=EEPROM.read(7);
 smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
 testSequence=EEPROM.read(10);
+randomMode=EEPROM.read(11);
+
 
 printReport();
+if(testSequence==1){initialTest();}
 }
 
 void printReport(){
-report+="[led1:en=";
+report="";
+report+="(reportStatus)[led1:en=";
 report+=l1_en;
 report+=",r=";
 report+=l1_r;
@@ -94,16 +92,128 @@ report+="]";
 Serial.println(report);
 }
 
-int t=5;
-void loop() {
-//if(Serial.available()){
-  printReport();
+void saveConfig(){
+  EEPROM.write(0,l1_en);
+  EEPROM.write(1,l1_r);
+  EEPROM.write(2,l1_g);
+  EEPROM.write(3,l1_b);
+
+  EEPROM.write(4,l2_en);
+  EEPROM.write(5,l2_r);
+  EEPROM.write(6,l2_g);
+  EEPROM.write(7,l2_b);
+
+  EEPROM.write(8,smoothOn);
+  EEPROM.write(9,spd);
+  EEPROM.write(10,testSequence);
+  EEPROM.write(11,randomMode);
+
+  Serial.println("Settings saved to EEPROM!");
+  }
+
+void initialTest(){
+  int t=1000;
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
+
+  digitalWrite(R,HIGH);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
+  delay(t);
+
+  digitalWrite(R,LOW);
+  digitalWrite(G,HIGH);
+  digitalWrite(B,LOW);
+  delay(t);
+
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,HIGH);
+  delay(t);
+
+  digitalWrite(R,HIGH);
+  digitalWrite(G,HIGH);
+  digitalWrite(B,LOW);
+  delay(t);
+
+  digitalWrite(R,HIGH);
+  digitalWrite(G,LOW);
+  digitalWrite(B,HIGH);
+  delay(t);
+
+  digitalWrite(R,LOW);
+  digitalWrite(G,HIGH);
+  digitalWrite(B,HIGH);
+  delay(t);
+
+  digitalWrite(R,HIGH);
+  digitalWrite(G,HIGH);
+  digitalWrite(B,HIGH);
+  delay(t);
+
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
+  }
+  
+
+
+ void listenToPort(){
+  if(Serial.available()){
   dataIn=Serial.readString();
-  if(dataIn=="ei"){
-    Serial.println("ou");
+  if(dataIn=="PING?"){
+    Serial.println("PONG!");
     }
-  //}
+  if(dataIn.indexOf('@')==4){
+    l1_en=dataIn.substring(dataIn.indexOf("l1en@")+5,dataIn.indexOf("@l1")).toInt();
+    l1_r=dataIn.substring(dataIn.indexOf("r@")+2,dataIn.indexOf("@r")).toInt();
+    l1_g=dataIn.substring(dataIn.indexOf("g@")+2,dataIn.indexOf("@g")).toInt();
+    l1_b=dataIn.substring(dataIn.indexOf("b@")+2,dataIn.indexOf("@b")).toInt();
+    
+    l2_en=dataIn.substring(dataIn.indexOf("l2en@")+5,dataIn.indexOf("@l2")).toInt();
+    l2_r=dataIn.substring(dataIn.indexOf("R@")+2,dataIn.indexOf("@R")).toInt();
+    l2_g=dataIn.substring(dataIn.indexOf("G@")+2,dataIn.indexOf("@G")).toInt();
+    l2_b=dataIn.substring(dataIn.indexOf("B@")+2,dataIn.indexOf("@B")).toInt();
+    
+    smoothOn=dataIn.substring(dataIn.indexOf("sm@")+3,dataIn.indexOf("@sm")).toInt();
+    spd=dataIn.substring(dataIn.indexOf("sp@")+3,dataIn.indexOf("@sp")).toInt();
+    testSequence=dataIn.substring(dataIn.indexOf("ts@")+3,dataIn.indexOf("@ts")).toInt();
+    randomMode=dataIn.substring(dataIn.indexOf("rdm@")+4,dataIn.indexOf("@rdm")).toInt();
+    Serial.println("Config received!"); 
+    }
+    if(dataIn=="SAVE"){
+      saveConfig();
+      }
+    if(dataIn=="TEST"){
+      initialTest();
+      }
+  }
+  }
+
+  void loop() {
+listenToPort();
+
+if(l1_en==0){
+  digitalWrite(R,0);
+  digitalWrite(G,0);
+  digitalWrite(B,0);
+  }
+if(l1_en==1){
+ analogWrite(R,l1_r);
+ analogWrite(G,l1_g);
+ analogWrite(B,l1_b);
+ }
 
 
- 
+ if(l2_en==0){
+  digitalWrite(Rs,0);
+  digitalWrite(Gs,0);
+  digitalWrite(Bs,0);
+  }
+if(l2_en==1){
+ analogWrite(Rs,l1_r);
+ analogWrite(Gs,l1_g);
+ analogWrite(Bs,l1_b);
+ }
  }

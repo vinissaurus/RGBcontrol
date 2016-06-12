@@ -90,6 +90,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     int speed=0;
     int smooth=0;
     int testOn=0;
+    int randomMode=0;
    
     String message = "";//String destinada ao uso de mensagens no console
 
@@ -99,7 +100,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM9" // Windows
+			"COM3","COM4","COM9" // Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -261,8 +262,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     public void sendSerialMessage(String s){
         try {
 		output.write(s.getBytes());
-                message("Sending:"+s);
+                message("CONSOLE:"+s);
 			} catch (IOException e1) {
+                            message("Error sending message!");
 				e1.printStackTrace();
 			}
     }
@@ -326,11 +328,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jSlider1 = new javax.swing.JSlider();
+        jPanel3 = new javax.swing.JPanel();
+        smoothCheckBox = new javax.swing.JCheckBox();
+        randomCheckBox = new javax.swing.JCheckBox();
+        testCheckBox = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         led2_checkBox = new javax.swing.JCheckBox();
         led2_rSlider = new javax.swing.JSlider();
@@ -345,6 +349,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_clone = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         consoleOut = new javax.swing.JTextArea();
+        consoleInput = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -371,6 +376,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_checkBox.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 led1_checkBoxStateChanged(evt);
+            }
+        });
+        led1_checkBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led1_checkBoxActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -785,29 +795,55 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Other config"));
 
-        jCheckBox2.setText("Smooth transition");
-
-        jCheckBox4.setText("Test sequence on load");
-
         jButton2.setText("SAVE TO EEPROM");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Speed"));
+        jPanel1.add(jSlider1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+
+        smoothCheckBox.setText("Smooth transition");
+        smoothCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smoothCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel3.add(smoothCheckBox, gridBagConstraints);
+
+        randomCheckBox.setText("Random mode");
+        randomCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                randomCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel3.add(randomCheckBox, gridBagConstraints);
+
+        testCheckBox.setText("Test sequence on load");
+        testCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel3.add(testCheckBox, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -818,9 +854,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox4))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -828,15 +862,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jCheckBox2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox4))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("LED2 - STRIP"));
@@ -1040,25 +1072,32 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         consoleOut.setForeground(new java.awt.Color(153, 204, 0));
         consoleOut.setLineWrap(true);
         consoleOut.setRows(5);
+        consoleOut.setAutoscrolls(false);
         consoleOut.setDragEnabled(true);
         jScrollPane2.setViewportView(consoleOut);
+
+        consoleInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consoleInputActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(consoleInput))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1073,8 +1112,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 .addGap(1, 1, 1)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1088,6 +1129,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_clone.setEnabled(led1_checkBox.isSelected());
         led1_random.setEnabled(led1_checkBox.isSelected());
         led1_favorite.setEnabled(led1_checkBox.isSelected());
+        
+        if(led1_checkBox.isSelected())led1_status.setEnabled(1);
+        if(!led1_checkBox.isSelected())led1_status.setEnabled(0);
+        //sendSettings();
     }//GEN-LAST:event_led1_checkBoxStateChanged
 
     private void led1_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_rSliderStateChanged
@@ -1140,6 +1185,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rSlider.setValue(led1_status.getR());
         led1_gSlider.setValue(led1_status.getG());
         led1_bSlider.setValue(led1_status.getB());
+        sendSettings();
     }//GEN-LAST:event_led1_cloneActionPerformed
 
     private void led1_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_randomActionPerformed
@@ -1147,7 +1193,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rSlider.setValue(led1_status.getR());
         led1_gSlider.setValue(led1_status.getG());
         led1_bSlider.setValue(led1_status.getB());
-        sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
+        sendSettings();
     }//GEN-LAST:event_led1_randomActionPerformed
 
     private void led1_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_favoriteActionPerformed
@@ -1173,19 +1219,61 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     }//GEN-LAST:event_led2_favoriteActionPerformed
 
     private void led1_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_rSliderMouseReleased
-sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
+sendSettings();
     }//GEN-LAST:event_led1_rSliderMouseReleased
 
     private void led1_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_gSliderMouseReleased
-sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
+sendSettings();
     }//GEN-LAST:event_led1_gSliderMouseReleased
 
     private void led1_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_bSliderMouseReleased
-sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"@gb@"+led1_bSlider.getValue()+"@b");
+sendSettings();
     }//GEN-LAST:event_led1_bSliderMouseReleased
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+sendSerialMessage("SAVE");        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void led1_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_checkBoxActionPerformed
+sendSettings();    // TODO add your handling code here:
+    }//GEN-LAST:event_led1_checkBoxActionPerformed
+
+    private void consoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleInputActionPerformed
+sendSerialMessage(consoleInput.getText());
+consoleInput.setText("");
+    }//GEN-LAST:event_consoleInputActionPerformed
+
+    private void randomCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomCheckBoxActionPerformed
+ if(randomCheckBox.isSelected())randomMode=1;
+  if(!randomCheckBox.isSelected())randomMode=0;
+  sendSettings();
+    }//GEN-LAST:event_randomCheckBoxActionPerformed
+
+    private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smoothCheckBoxActionPerformed
+
+    private void testCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testCheckBoxActionPerformed
+ if(testCheckBox.isSelected())testOn=1;
+  if(!testCheckBox.isSelected())testOn=0;
+  sendSettings();
+    }//GEN-LAST:event_testCheckBoxActionPerformed
+
     
-  
+public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
+sendSerialMessage("l1en@"+led1_status.isEnabled()
+        + "@l1enr@"+led1_rSlider.getValue()
+        +"@rg@"+led1_gSlider.getValue()
+        +"@gb@"+led1_bSlider.getValue()
+        +"@bl2en@"+led2_status.isEnabled()
+        +"@l2enR@"+led2_status.getR()
+        +"@RG@"+led2_status.getG()
+        +"@GB@"+led2_status.getB()
+        +"@Bsm@"+smooth
+        +"@smsp@"+speed
+        +"@spts@"+testOn
+        +"@tsrdm@"+randomMode+"@rdm");
+}
    
     /**
      * @param args the command line arguments
@@ -1237,10 +1325,9 @@ sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField consoleInput;
     private javax.swing.JTextArea consoleOut;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1278,6 +1365,7 @@ sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;
@@ -1304,6 +1392,9 @@ sendSerialMessage("cr@"+led1_rSlider.getValue()+"@rg@"+led1_gSlider.getValue()+"
     private javax.swing.JPanel led2_rPanel;
     private javax.swing.JSlider led2_rSlider;
     private javax.swing.JButton led2_random;
+    private javax.swing.JCheckBox randomCheckBox;
+    private javax.swing.JCheckBox smoothCheckBox;
+    private javax.swing.JCheckBox testCheckBox;
     // End of variables declaration//GEN-END:variables
 
 
