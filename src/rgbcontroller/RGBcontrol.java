@@ -5,6 +5,9 @@
  */
 package rgbcontroller;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
 /**
  *
  * @author Vinicius-Desktop
@@ -15,7 +18,11 @@ public class RGBcontrol {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       TelaPrincipal tp = new TelaPrincipal();
+        tp.setVisible(true);
+        
+ }
+       // tp.main(null);
     }
     
-}
+

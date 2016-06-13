@@ -1,7 +1,7 @@
 #include <EEPROM.h>
 
-int Rs= 6;
-int Gs= 5;
+int Rs= 5;
+int Gs= 6;
 int Bs= 3;
 int R = 11;
 int G = 10;
@@ -155,6 +155,51 @@ void initialTest(){
   digitalWrite(R,LOW);
   digitalWrite(G,LOW);
   digitalWrite(B,LOW);
+
+//Teste na fita led
+
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,LOW);
+
+  digitalWrite(Rs,HIGH);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,LOW);
+  delay(t);
+
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,HIGH);
+  digitalWrite(Bs,LOW);
+  delay(t);
+
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,HIGH);
+  delay(t);
+
+  digitalWrite(Rs,HIGH);
+  digitalWrite(Gs,HIGH);
+  digitalWrite(Bs,LOW);
+  delay(t);
+
+  digitalWrite(Rs,HIGH);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,HIGH);
+  delay(t);
+
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,HIGH);
+  digitalWrite(Bs,HIGH);
+  delay(t);
+
+  digitalWrite(Rs,HIGH);
+  digitalWrite(Gs,HIGH);
+  digitalWrite(Bs,HIGH);
+  delay(t);
+
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,LOW);
   }
   
 
@@ -188,6 +233,9 @@ void initialTest(){
     if(dataIn=="TEST"){
       initialTest();
       }
+    if(dataIn=="REPORT"){
+      printReport();
+      }
   }
   }
 
@@ -195,9 +243,9 @@ void initialTest(){
 listenToPort();
 
 if(l1_en==0){
-  digitalWrite(R,0);
-  digitalWrite(G,0);
-  digitalWrite(B,0);
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
   }
 if(l1_en==1){
  analogWrite(R,l1_r);
@@ -207,13 +255,15 @@ if(l1_en==1){
 
 
  if(l2_en==0){
-  digitalWrite(Rs,0);
-  digitalWrite(Gs,0);
-  digitalWrite(Bs,0);
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,LOW);
   }
+  
 if(l2_en==1){
- analogWrite(Rs,l1_r);
- analogWrite(Gs,l1_g);
- analogWrite(Bs,l1_b);
+ analogWrite(Rs,l2_r);
+ analogWrite(Gs,l2_g);
+ analogWrite(Bs,l2_b);
  }
+ 
  }

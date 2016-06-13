@@ -17,6 +17,8 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -119,6 +121,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 // the next line is for Raspberry Pi and 
                 // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
                 //System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+                @SuppressWarnings("unchecked")
+		Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers();
+		while(ports.hasMoreElements()){
+			CommPortIdentifier port = ports.nextElement(); 
+			
+		}
+                
                 message("Starting communication...");
 		CommPortIdentifier portId = null;
 		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
@@ -206,6 +215,14 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     led1_rSlider.setValue(led1_status.getR());
     led1_gSlider.setValue(led1_status.getG());
     led1_bSlider.setValue(led1_status.getB());
+    
+      switch(led2_status.isEnabled()){
+        case 0:led2_checkBox.setSelected(false);
+        case 1:led2_checkBox.setSelected(true);
+    }
+    led2_rSlider.setValue(led2_status.getR());
+    led2_gSlider.setValue(led2_status.getG());
+    led2_bSlider.setValue(led2_status.getB());
     }
     
     void readSerialMessage(String s){
@@ -252,10 +269,17 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
+         try{
+   System.setProperty("sun.awt.noerasebackground", "true");
+   UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+   SwingUtilities.updateComponentTreeUI(this);
+  }catch(Exception e){
+   e.printStackTrace();
+  }
         initComponents();
         iniciarVariaveis();
         initialize();
-
+        main(null);
 
     }
 
@@ -881,6 +905,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 led2_checkBoxStateChanged(evt);
             }
         });
+        led2_checkBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                led2_checkBoxActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         jPanel13.add(led2_checkBox, gridBagConstraints);
@@ -892,6 +921,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_rSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 led2_rSliderStateChanged(evt);
+            }
+        });
+        led2_rSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led2_rSliderMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -909,6 +943,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 led2_bSliderStateChanged(evt);
             }
         });
+        led2_bSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led2_bSliderMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -922,6 +961,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_gSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 led2_gSliderStateChanged(evt);
+            }
+        });
+        led2_gSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                led2_gSliderMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1160,6 +1204,8 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_clone.setEnabled(led2_checkBox.isSelected());
         led2_random.setEnabled(led2_checkBox.isSelected());
         led2_favorite.setEnabled(led2_checkBox.isSelected());
+        if(led2_checkBox.isSelected())led2_status.setEnabled(1);
+        if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
@@ -1205,6 +1251,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_rSlider.setValue(led2_status.getR());
         led2_gSlider.setValue(led2_status.getG());
         led2_bSlider.setValue(led2_status.getB());
+        sendSettings();
     }//GEN-LAST:event_led2_cloneActionPerformed
 
     private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
@@ -1212,6 +1259,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_rSlider.setValue(led2_status.getR());
         led2_gSlider.setValue(led2_status.getG());
         led2_bSlider.setValue(led2_status.getB());
+        sendSettings();
     }//GEN-LAST:event_led2_randomActionPerformed
 
     private void led2_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_favoriteActionPerformed
@@ -1259,6 +1307,22 @@ consoleInput.setText("");
   sendSettings();
     }//GEN-LAST:event_testCheckBoxActionPerformed
 
+    private void led2_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_checkBoxActionPerformed
+ sendSettings();
+    }//GEN-LAST:event_led2_checkBoxActionPerformed
+
+    private void led2_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_rSliderMouseReleased
+ sendSettings();       // TODO add your handling code here:
+    }//GEN-LAST:event_led2_rSliderMouseReleased
+
+    private void led2_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_gSliderMouseReleased
+sendSettings();        // TODO add your handling code here:
+    }//GEN-LAST:event_led2_gSliderMouseReleased
+
+    private void led2_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_bSliderMouseReleased
+ sendSettings();       // TODO add your handling code here:
+    }//GEN-LAST:event_led2_bSliderMouseReleased
+
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
 sendSerialMessage("l1en@"+led1_status.isEnabled()
@@ -1278,45 +1342,26 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws Exception{
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        
         //</editor-fold>
 
         //</editor-fold>
 
         /* Create and display the form */
      
-      
-//		@SuppressWarnings("unchecked")
-//		Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers();
-//		while(ports.hasMoreElements()){
-//			CommPortIdentifier port = ports.nextElement(); 
-//			
-//		}
+        
+		
             
            java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+               
+                //new TelaPrincipal().setVisible(true);
                 
                 
                 
