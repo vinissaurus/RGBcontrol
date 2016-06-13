@@ -102,7 +102,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM3","COM4","COM9" // Windows
+			"COM3","COM4","COM5","COM9" // Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -318,39 +318,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_colorPanel = new javax.swing.JPanel();
         led1_random = new javax.swing.JButton();
         led1_clone = new javax.swing.JButton();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -372,9 +340,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_colorPanel = new javax.swing.JPanel();
         led2_random = new javax.swing.JButton();
         led2_clone = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         consoleOut = new javax.swing.JTextArea();
         consoleInput = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -486,7 +458,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         );
         led1_bPanelLayout.setVerticalGroup(
             led1_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -509,7 +481,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         );
         led1_rPanelLayout.setVerticalGroup(
             led1_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -532,7 +504,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         );
         led1_gPanelLayout.setVerticalGroup(
             led1_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -569,7 +541,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         );
         led1_colorPanelLayout.setVerticalGroup(
             led1_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 18, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -607,216 +579,26 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(led1_clone, gridBagConstraints);
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Favorites"));
-        jPanel11.setLayout(new java.awt.GridBagLayout());
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setPreferredSize(new java.awt.Dimension(10, 23));
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setOpaque(true);
-        jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel1, new java.awt.GridBagConstraints());
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setOpaque(true);
-        jLabel2.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel2, new java.awt.GridBagConstraints());
-
-        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setOpaque(true);
-        jLabel3.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel3, new java.awt.GridBagConstraints());
-
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setOpaque(true);
-        jLabel4.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel4, new java.awt.GridBagConstraints());
-
-        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel5.setOpaque(true);
-        jLabel5.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel5, new java.awt.GridBagConstraints());
-
-        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel6.setOpaque(true);
-        jLabel6.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel6, new java.awt.GridBagConstraints());
-
-        jLabel7.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel7.setOpaque(true);
-        jLabel7.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel7, new java.awt.GridBagConstraints());
-
-        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel8.setOpaque(true);
-        jLabel8.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel8, new java.awt.GridBagConstraints());
-
-        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel9.setOpaque(true);
-        jLabel9.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel9, new java.awt.GridBagConstraints());
-
-        jLabel10.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel10.setOpaque(true);
-        jLabel10.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel10, new java.awt.GridBagConstraints());
-
-        jLabel11.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel11.setOpaque(true);
-        jLabel11.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel11, new java.awt.GridBagConstraints());
-
-        jLabel12.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel12.setOpaque(true);
-        jLabel12.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel12, new java.awt.GridBagConstraints());
-
-        jLabel13.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel13.setOpaque(true);
-        jLabel13.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel13, new java.awt.GridBagConstraints());
-
-        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel14.setOpaque(true);
-        jLabel14.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel14, new java.awt.GridBagConstraints());
-
-        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel15.setOpaque(true);
-        jLabel15.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel15, new java.awt.GridBagConstraints());
-
-        jLabel16.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel16.setOpaque(true);
-        jLabel16.setPreferredSize(new java.awt.Dimension(30, 30));
-        jPanel11.add(jLabel16, new java.awt.GridBagConstraints());
-
-        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel17.setOpaque(true);
-        jLabel17.setPreferredSize(new java.awt.Dimension(30, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel17, gridBagConstraints);
-
-        jLabel18.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel18.setOpaque(true);
-        jLabel18.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 13;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel18, gridBagConstraints);
-
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setOpaque(true);
-        jLabel19.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel19, gridBagConstraints);
-
-        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel20.setOpaque(true);
-        jLabel20.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel20, gridBagConstraints);
-
-        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel21.setOpaque(true);
-        jLabel21.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 15;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel21, gridBagConstraints);
-
-        jLabel22.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel22.setOpaque(true);
-        jLabel22.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 11;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel22, gridBagConstraints);
-
-        jLabel23.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel23.setOpaque(true);
-        jLabel23.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel23, gridBagConstraints);
-
-        jLabel24.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel24.setOpaque(true);
-        jLabel24.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel24, gridBagConstraints);
-
-        jLabel25.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel25.setOpaque(true);
-        jLabel25.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel25, gridBagConstraints);
-
-        jLabel26.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel26.setOpaque(true);
-        jLabel26.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel26, gridBagConstraints);
-
-        jLabel27.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel27.setOpaque(true);
-        jLabel27.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel27, gridBagConstraints);
-
-        jLabel28.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel28.setOpaque(true);
-        jLabel28.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel28, gridBagConstraints);
-
-        jLabel29.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel29.setOpaque(true);
-        jLabel29.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel29, gridBagConstraints);
-
-        jLabel30.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel30.setOpaque(true);
-        jLabel30.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel30, gridBagConstraints);
-
-        jLabel31.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel31.setOpaque(true);
-        jLabel31.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel31, gridBagConstraints);
-
-        jLabel32.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel32.setOpaque(true);
-        jLabel32.setPreferredSize(new java.awt.Dimension(30, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        jPanel11.add(jLabel32, gridBagConstraints);
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        jPanel2.add(jPanel4, gridBagConstraints);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Other config"));
 
@@ -871,6 +653,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel3.add(testCheckBox, gridBagConstraints);
 
         jButton1.setText("LOAD FROM EEPROM");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1113,6 +900,30 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel13.add(led2_clone, gridBagConstraints);
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.setPreferredSize(new java.awt.Dimension(10, 23));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        jPanel13.add(jPanel5, gridBagConstraints);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Console output"));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         consoleOut.setEditable(false);
         consoleOut.setBackground(new java.awt.Color(0, 0, 0));
         consoleOut.setColumns(20);
@@ -1124,11 +935,30 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         consoleOut.setDragEnabled(true);
         jScrollPane2.setViewportView(consoleOut);
 
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 17, 476, 159));
+
         consoleInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consoleInputActionPerformed(evt);
             }
         });
+        jPanel6.add(consoleInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 320, 31));
+
+        jButton3.setText("SEND");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 90, 30));
+
+        jButton4.setText("CLEAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1136,33 +966,26 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(consoleInput)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(consoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1327,6 +1150,20 @@ sendSettings();        // TODO add your handling code here:
  sendSettings();       // TODO add your handling code here:
     }//GEN-LAST:event_led2_bSliderMouseReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+sendSerialMessage("REPORT");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+sendSerialMessage(consoleInput.getText());
+consoleInput.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+message="";
+consoleOut.setText("");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
 sendSerialMessage("l1en@"+led1_status.isEnabled()
@@ -1378,44 +1215,16 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JTextArea consoleOut;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;

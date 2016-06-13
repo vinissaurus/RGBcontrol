@@ -38,6 +38,14 @@ void setup() {
  pinMode(G,OUTPUT);
  pinMode(B,OUTPUT);
   
+
+
+
+printReport();
+if(testSequence==1){initialTest();}
+}
+
+void printReport(){
   //leitura de eeprom para variáveis
 l1_en=EEPROM.read(0);
 l1_r=EEPROM.read(1);
@@ -52,14 +60,7 @@ l2_b=EEPROM.read(7);
 smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
 testSequence=EEPROM.read(10);
-randomMode=EEPROM.read(11);
-
-
-printReport();
-if(testSequence==1){initialTest();}
-}
-
-void printReport(){
+randomMode=EEPROM.read(11);  
 report="";
 report+="(reportStatus)[led1:en=";
 report+=l1_en;
