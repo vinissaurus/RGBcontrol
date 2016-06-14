@@ -19,6 +19,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
 
 /**
  *
@@ -271,7 +272,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     public TelaPrincipal() {
          try{
    System.setProperty("sun.awt.noerasebackground", "true");
-   UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+   UIManager.setLookAndFeel(new SyntheticaBlackEyeLookAndFeel());
    SwingUtilities.updateComponentTreeUI(this);
   }catch(Exception e){
    e.printStackTrace();
@@ -314,20 +315,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_bPanel = new javax.swing.JPanel();
         led1_rPanel = new javax.swing.JPanel();
         led1_gPanel = new javax.swing.JPanel();
-        led1_favorite = new javax.swing.JButton();
         led1_colorPanel = new javax.swing.JPanel();
         led1_random = new javax.swing.JButton();
         led1_clone = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jSlider1 = new javax.swing.JSlider();
         jPanel3 = new javax.swing.JPanel();
         smoothCheckBox = new javax.swing.JCheckBox();
         randomCheckBox = new javax.swing.JCheckBox();
         testCheckBox = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
+        jSlider1 = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         led2_checkBox = new javax.swing.JCheckBox();
         led2_rSlider = new javax.swing.JSlider();
@@ -336,7 +336,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_bPanel = new javax.swing.JPanel();
         led2_rPanel = new javax.swing.JPanel();
         led2_gPanel = new javax.swing.JPanel();
-        led2_favorite = new javax.swing.JButton();
         led2_colorPanel = new javax.swing.JPanel();
         led2_random = new javax.swing.JButton();
         led2_clone = new javax.swing.JButton();
@@ -381,7 +380,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanel2.add(led1_checkBox, gridBagConstraints);
 
         led1_rSlider.setMaximum(255);
@@ -401,8 +402,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel2.add(led1_rSlider, gridBagConstraints);
 
         led1_bSlider.setMaximum(255);
@@ -420,9 +422,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel2.add(led1_bSlider, gridBagConstraints);
 
         led1_gSlider.setMaximum(255);
@@ -441,9 +444,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel2.add(led1_gSlider, gridBagConstraints);
 
         led1_bPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -454,19 +457,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_bPanel.setLayout(led1_bPanelLayout);
         led1_bPanelLayout.setHorizontalGroup(
             led1_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led1_bPanelLayout.setVerticalGroup(
             led1_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel2.add(led1_bPanel, gridBagConstraints);
 
         led1_rPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -477,19 +480,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rPanel.setLayout(led1_rPanelLayout);
         led1_rPanelLayout.setHorizontalGroup(
             led1_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led1_rPanelLayout.setVerticalGroup(
             led1_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel2.add(led1_rPanel, gridBagConstraints);
 
         led1_gPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -500,34 +503,20 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_gPanel.setLayout(led1_gPanelLayout);
         led1_gPanelLayout.setHorizontalGroup(
             led1_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led1_gPanelLayout.setVerticalGroup(
             led1_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel2.add(led1_gPanel, gridBagConstraints);
-
-        led1_favorite.setText("ADD FAVORITE");
-        led1_favorite.setEnabled(false);
-        led1_favorite.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                led1_favoriteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(led1_favorite, gridBagConstraints);
 
         led1_colorPanel.setBackground(new java.awt.Color(0, 0, 0));
         led1_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -537,18 +526,22 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_colorPanel.setLayout(led1_colorPanelLayout);
         led1_colorPanelLayout.setHorizontalGroup(
             led1_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 228, Short.MAX_VALUE)
         );
         led1_colorPanelLayout.setVerticalGroup(
             led1_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 20, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
         jPanel2.add(led1_colorPanel, gridBagConstraints);
 
         led1_random.setText("RANDOM");
@@ -561,8 +554,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 162;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 6);
         jPanel2.add(led1_random, gridBagConstraints);
 
         led1_clone.setText("CLONE LED2");
@@ -575,8 +570,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 146;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 6);
         jPanel2.add(led1_clone, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -586,31 +583,32 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 226, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 20, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
         jPanel2.add(jPanel4, gridBagConstraints);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Other config"));
 
-        jButton2.setText("SAVE TO EEPROM");
+        jButton2.setText("SAVE");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Speed"));
-        jPanel1.add(jSlider1);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setLayout(new java.awt.GridBagLayout());
@@ -623,7 +621,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(smoothCheckBox, gridBagConstraints);
 
@@ -636,7 +634,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(randomCheckBox, gridBagConstraints);
 
@@ -648,42 +645,52 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(testCheckBox, gridBagConstraints);
 
-        jButton1.setText("LOAD FROM EEPROM");
+        jButton1.setText("LOAD");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jLabel1.setText("Speed:");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+            .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("LED2 - STRIP"));
@@ -702,7 +709,12 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanel13.add(led2_checkBox, gridBagConstraints);
 
         led2_rSlider.setMaximum(255);
@@ -722,8 +734,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel13.add(led2_rSlider, gridBagConstraints);
 
         led2_bSlider.setMaximum(255);
@@ -741,9 +755,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel13.add(led2_bSlider, gridBagConstraints);
 
         led2_gSlider.setMaximum(255);
@@ -762,9 +778,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 250.0;
+        gridBagConstraints.ipadx = 170;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel13.add(led2_gSlider, gridBagConstraints);
 
         led2_bPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -775,19 +792,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_bPanel.setLayout(led2_bPanelLayout);
         led2_bPanelLayout.setHorizontalGroup(
             led2_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led2_bPanelLayout.setVerticalGroup(
             led2_bPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel13.add(led2_bPanel, gridBagConstraints);
 
         led2_rPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -798,19 +815,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_rPanel.setLayout(led2_rPanelLayout);
         led2_rPanelLayout.setHorizontalGroup(
             led2_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led2_rPanelLayout.setVerticalGroup(
             led2_rPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel13.add(led2_rPanel, gridBagConstraints);
 
         led2_gPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -821,34 +838,20 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_gPanel.setLayout(led2_gPanelLayout);
         led2_gPanelLayout.setHorizontalGroup(
             led2_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         led2_gPanelLayout.setVerticalGroup(
             led2_gPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 16, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 20.0;
-        gridBagConstraints.weighty = 20.0;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel13.add(led2_gPanel, gridBagConstraints);
-
-        led2_favorite.setText("ADD FAVORITE");
-        led2_favorite.setEnabled(false);
-        led2_favorite.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                led2_favoriteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel13.add(led2_favorite, gridBagConstraints);
 
         led2_colorPanel.setBackground(new java.awt.Color(0, 0, 0));
         led2_colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -858,18 +861,21 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led2_colorPanel.setLayout(led2_colorPanelLayout);
         led2_colorPanelLayout.setHorizontalGroup(
             led2_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 231, Short.MAX_VALUE)
         );
         led2_colorPanelLayout.setVerticalGroup(
             led2_colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 18, Short.MAX_VALUE)
+            .addGap(0, 20, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
         jPanel13.add(led2_colorPanel, gridBagConstraints);
 
         led2_random.setText("RANDOM");
@@ -882,8 +888,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         jPanel13.add(led2_random, gridBagConstraints);
 
         led2_clone.setText("CLONE LED1");
@@ -896,8 +904,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         jPanel13.add(led2_clone, gridBagConstraints);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -907,22 +917,24 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 229, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 20, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
         jPanel13.add(jPanel5, gridBagConstraints);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Console output"));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         consoleOut.setEditable(false);
         consoleOut.setBackground(new java.awt.Color(0, 0, 0));
@@ -935,14 +947,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         consoleOut.setDragEnabled(true);
         jScrollPane2.setViewportView(consoleOut);
 
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 17, 476, 159));
-
         consoleInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consoleInputActionPerformed(evt);
             }
         });
-        jPanel6.add(consoleInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 320, 31));
 
         jButton3.setText("SEND");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -950,7 +959,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 90, 30));
 
         jButton4.setText("CLEAR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -958,34 +966,66 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, -1, 30));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(consoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(consoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -999,7 +1039,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_bSlider.setEnabled(led1_checkBox.isSelected());
         led1_clone.setEnabled(led1_checkBox.isSelected());
         led1_random.setEnabled(led1_checkBox.isSelected());
-        led1_favorite.setEnabled(led1_checkBox.isSelected());
+        
         
         if(led1_checkBox.isSelected())led1_status.setEnabled(1);
         if(!led1_checkBox.isSelected())led1_status.setEnabled(0);
@@ -1024,35 +1064,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_colorPanel.setBackground(new Color(led1_status.getR(), led1_status.getG(), led1_status.getB()));
     }//GEN-LAST:event_led1_bSliderStateChanged
 
-    private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
-        led2_rSlider.setEnabled(led2_checkBox.isSelected());
-        led2_gSlider.setEnabled(led2_checkBox.isSelected());
-        led2_bSlider.setEnabled(led2_checkBox.isSelected());
-        led2_clone.setEnabled(led2_checkBox.isSelected());
-        led2_random.setEnabled(led2_checkBox.isSelected());
-        led2_favorite.setEnabled(led2_checkBox.isSelected());
-        if(led2_checkBox.isSelected())led2_status.setEnabled(1);
-        if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
-    }//GEN-LAST:event_led2_checkBoxStateChanged
-
-    private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
-        led2_rPanel.setBackground(new Color(led2_rSlider.getValue(), 0, 0));
-        led2_status.setR(led2_rSlider.getValue());
-        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
-    }//GEN-LAST:event_led2_rSliderStateChanged
-
-    private void led2_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_gSliderStateChanged
-        led2_gPanel.setBackground(new Color(0, led2_gSlider.getValue(), 0));
-        led2_status.setG(led2_gSlider.getValue());
-        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
-    }//GEN-LAST:event_led2_gSliderStateChanged
-
-    private void led2_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_bSliderStateChanged
-        led2_bPanel.setBackground(new Color(0, 0, led2_bSlider.getValue()));
-        led2_status.setB(led2_bSlider.getValue());
-        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
-    }//GEN-LAST:event_led2_bSliderStateChanged
-
     private void led1_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_cloneActionPerformed
         led1_status.setColor(led2_status.getR(), led2_status.getG(), led2_status.getB());
         led1_rSlider.setValue(led1_status.getR());
@@ -1068,30 +1079,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_bSlider.setValue(led1_status.getB());
         sendSettings();
     }//GEN-LAST:event_led1_randomActionPerformed
-
-    private void led1_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_favoriteActionPerformed
-
-    }//GEN-LAST:event_led1_favoriteActionPerformed
-
-    private void led2_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_cloneActionPerformed
-        led2_status.setColor(led1_status.getR(), led1_status.getG(), led1_status.getB());
-        led2_rSlider.setValue(led2_status.getR());
-        led2_gSlider.setValue(led2_status.getG());
-        led2_bSlider.setValue(led2_status.getB());
-        sendSettings();
-    }//GEN-LAST:event_led2_cloneActionPerformed
-
-    private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
-        led2_status.setColor(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
-        led2_rSlider.setValue(led2_status.getR());
-        led2_gSlider.setValue(led2_status.getG());
-        led2_bSlider.setValue(led2_status.getB());
-        sendSettings();
-    }//GEN-LAST:event_led2_randomActionPerformed
-
-    private void led2_favoriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_favoriteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_led2_favoriteActionPerformed
 
     private void led1_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_rSliderMouseReleased
 sendSettings();
@@ -1134,22 +1121,6 @@ consoleInput.setText("");
   sendSettings();
     }//GEN-LAST:event_testCheckBoxActionPerformed
 
-    private void led2_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_checkBoxActionPerformed
- sendSettings();
-    }//GEN-LAST:event_led2_checkBoxActionPerformed
-
-    private void led2_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_rSliderMouseReleased
- sendSettings();       // TODO add your handling code here:
-    }//GEN-LAST:event_led2_rSliderMouseReleased
-
-    private void led2_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_gSliderMouseReleased
-sendSettings();        // TODO add your handling code here:
-    }//GEN-LAST:event_led2_gSliderMouseReleased
-
-    private void led2_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_bSliderMouseReleased
- sendSettings();       // TODO add your handling code here:
-    }//GEN-LAST:event_led2_bSliderMouseReleased
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 sendSerialMessage("REPORT");
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -1157,12 +1128,76 @@ sendSerialMessage("REPORT");
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 sendSerialMessage(consoleInput.getText());
 consoleInput.setText("");
+consoleInput.requestFocus();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 message="";
 consoleOut.setText("");
+consoleInput.setText("");
+consoleInput.requestFocus();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void led2_cloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_cloneActionPerformed
+        led2_status.setColor(led1_status.getR(), led1_status.getG(), led1_status.getB());
+        led2_rSlider.setValue(led2_status.getR());
+        led2_gSlider.setValue(led2_status.getG());
+        led2_bSlider.setValue(led2_status.getB());
+        sendSettings();
+    }//GEN-LAST:event_led2_cloneActionPerformed
+
+    private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
+        led2_status.setColor(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
+        led2_rSlider.setValue(led2_status.getR());
+        led2_gSlider.setValue(led2_status.getG());
+        led2_bSlider.setValue(led2_status.getB());
+        sendSettings();
+    }//GEN-LAST:event_led2_randomActionPerformed
+
+    private void led2_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_gSliderMouseReleased
+        sendSettings();        // TODO add your handling code here:
+    }//GEN-LAST:event_led2_gSliderMouseReleased
+
+    private void led2_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_gSliderStateChanged
+        led2_gPanel.setBackground(new Color(0, led2_gSlider.getValue(), 0));
+        led2_status.setG(led2_gSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
+    }//GEN-LAST:event_led2_gSliderStateChanged
+
+    private void led2_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_bSliderMouseReleased
+        sendSettings();       // TODO add your handling code here:
+    }//GEN-LAST:event_led2_bSliderMouseReleased
+
+    private void led2_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_bSliderStateChanged
+        led2_bPanel.setBackground(new Color(0, 0, led2_bSlider.getValue()));
+        led2_status.setB(led2_bSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
+    }//GEN-LAST:event_led2_bSliderStateChanged
+
+    private void led2_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_rSliderMouseReleased
+        sendSettings();       // TODO add your handling code here:
+    }//GEN-LAST:event_led2_rSliderMouseReleased
+
+    private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
+        led2_rPanel.setBackground(new Color(led2_rSlider.getValue(), 0, 0));
+        led2_status.setR(led2_rSlider.getValue());
+        led2_colorPanel.setBackground(new Color(led2_status.getR(), led2_status.getG(), led2_status.getB()));
+    }//GEN-LAST:event_led2_rSliderStateChanged
+
+    private void led2_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_checkBoxActionPerformed
+        sendSettings();
+    }//GEN-LAST:event_led2_checkBoxActionPerformed
+
+    private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
+        led2_rSlider.setEnabled(led2_checkBox.isSelected());
+        led2_gSlider.setEnabled(led2_checkBox.isSelected());
+        led2_bSlider.setEnabled(led2_checkBox.isSelected());
+        led2_clone.setEnabled(led2_checkBox.isSelected());
+        led2_random.setEnabled(led2_checkBox.isSelected());
+
+        if(led2_checkBox.isSelected())led2_status.setEnabled(1);
+        if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
+    }//GEN-LAST:event_led2_checkBoxStateChanged
 
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
@@ -1217,7 +1252,7 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
@@ -1234,7 +1269,6 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JCheckBox led1_checkBox;
     private javax.swing.JButton led1_clone;
     private javax.swing.JPanel led1_colorPanel;
-    private javax.swing.JButton led1_favorite;
     private javax.swing.JPanel led1_gPanel;
     private javax.swing.JSlider led1_gSlider;
     private javax.swing.JPanel led1_rPanel;
@@ -1245,7 +1279,6 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JCheckBox led2_checkBox;
     private javax.swing.JButton led2_clone;
     private javax.swing.JPanel led2_colorPanel;
-    private javax.swing.JButton led2_favorite;
     private javax.swing.JPanel led2_gPanel;
     private javax.swing.JSlider led2_gSlider;
     private javax.swing.JPanel led2_rPanel;
