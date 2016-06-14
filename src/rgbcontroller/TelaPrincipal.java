@@ -281,7 +281,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         iniciarVariaveis();
         initialize();
         main(null);
-
+//this changed
     }
 
     public void sendSerialMessage(String s){
