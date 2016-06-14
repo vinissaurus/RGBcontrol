@@ -1,0 +1,67 @@
+04/04/2014 V2.9.12
+- Modified disable state for ToggleButtons for proper ButtonBar support.  
+
+------------------------------------------------------------------------------- 
+
+06/10/2013 V2.9.11
+- Modified disabled foreground color for default buttons.
+- IllegalArgumentException for TitledBorder on large panels.
+
+------------------------------------------------------------------------------- 
+
+08/16/2012 V2.9.10
+- Slider focus isn't painted.
+- Fixed fraction exception for very small titled borders.
+
+------------------------------------------------------------------------------- 
+
+10/12/2011 V2.9.9
+- Added UI-property "ToolTip.background" support.
+
+------------------------------------------------------------------------------- 
+
+06/24/2011 V2.9.8
+- Modified FileChooser sort column color 
+- Changed ScrollBar.minimumThumbSize type to lowercase - dimension.   
+
+------------------------------------------------------------------------------- 
+
+02/15/2011 V2.9.7
+- Bugix: Internal frame buttons will be clipped when pressed 
+
+------------------------------------------------------------------------------- 
+
+02/01/2011 V2.9.6
+- Increased window resize border to improve usability  
+- Modified table header insets  
+- centered arrow up/down images, added new images for comboBox arrows 
+
+------------------------------------------------------------------------------- 
+
+12/10/2010 V2.9.5
+- Modfied MenuInsets for being RTL compliant  
+
+------------------------------------------------------------------------------- 
+
+08/17/2010 V2.9.4
+- Set TableCellEditor focus size to 2 for compatibility with Synthetica versions below V2.11  
+
+------------------------------------------------------------------------------- 
+
+05/31/2010 V2.9.3
+- Modified splitpane background for proper appearance under some rare circumstances.
+
+------------------------------------------------------------------------------- 
+
+01/01/2010 V2.9.2
+- Updated copyright and license because of company rebrand.
+
+------------------------------------------------------------------------------- 
+
+11/03/2009 V2.9.1
+- Increased spinner insets - to reach same height as text components.
+
+------------------------------------------------------------------------------- 
+
+10/07/2009 V2.9.0
+- First official release of the BlackEye LAF.
