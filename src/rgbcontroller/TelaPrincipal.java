@@ -103,7 +103,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM3","COM4","COM5","COM9" // Windows
+			"COM3","COM4","COM5","COM8","COM9" // Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -326,7 +326,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         randomCheckBox = new javax.swing.JCheckBox();
         testCheckBox = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
+        speedSlider = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         led2_checkBox = new javax.swing.JCheckBox();
@@ -656,6 +656,15 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             }
         });
 
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setValue(100);
+        speedSlider.setInverted(true);
+        speedSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                speedSliderMouseReleased(evt);
+            }
+        });
+
         jLabel1.setText("Speed:");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -667,7 +676,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -686,7 +695,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1112,7 +1121,9 @@ consoleInput.setText("");
     }//GEN-LAST:event_randomCheckBoxActionPerformed
 
     private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
-        // TODO add your handling code here:
+  if(smoothCheckBox.isSelected()){smooth=1;}
+  if(!smoothCheckBox.isSelected()){smooth=0;}
+  sendSettings();
     }//GEN-LAST:event_smoothCheckBoxActionPerformed
 
     private void testCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testCheckBoxActionPerformed
@@ -1199,6 +1210,11 @@ consoleInput.requestFocus();
         if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
+    private void speedSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speedSliderMouseReleased
+speed=speedSlider.getValue();
+sendSettings();// TODO add your handling code here:
+    }//GEN-LAST:event_speedSliderMouseReleased
+
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
 sendSerialMessage("l1en@"+led1_status.isEnabled()
@@ -1262,7 +1278,6 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSlider jSlider1;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel led1_bPanel;
     private javax.swing.JSlider led1_bSlider;
@@ -1286,6 +1301,7 @@ sendSerialMessage("l1en@"+led1_status.isEnabled()
     private javax.swing.JButton led2_random;
     private javax.swing.JCheckBox randomCheckBox;
     private javax.swing.JCheckBox smoothCheckBox;
+    private javax.swing.JSlider speedSlider;
     private javax.swing.JCheckBox testCheckBox;
     // End of variables declaration//GEN-END:variables
 
