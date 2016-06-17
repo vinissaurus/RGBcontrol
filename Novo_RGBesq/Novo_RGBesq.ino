@@ -22,6 +22,7 @@ int targetB=255;
 int targetG=255;
 
 int spd=0;
+int waitTime=30;
 int testSequence=0;
 int randomMode=0;
 unsigned int counter=0;
@@ -265,10 +266,10 @@ void initialTest(){
 
 
 void randomBegin(){
-      targetR=random(0,255);
+    targetR=random(0,255);
     targetG=random(0,255);
     targetB=random(0,255);
-    Serial.println("Generating random...");
+    //Serial.println("Generating random...");
   }
 
 
@@ -279,9 +280,10 @@ if(randomMode==1){
 
  if(targetR==l2_r&&targetG==l2_g&&targetB==l2_b){
 randomBegin();
+
     }
   
-  if(counter>=spd){
+if(counter==10){
  
       if(targetR>l2_r){
       l2_r++;
@@ -289,23 +291,27 @@ randomBegin();
       if(targetR<l2_r){
       l2_r--;
       }
-
+      l1_r=255-l2_r;
+      
       if(targetG>l2_g){
       l2_g++;
       }
       if(targetG<l2_g){
       l2_g--;
       }
-
+      l1_g=255-l2_g;
+      
       if(targetB>l2_b){
       l2_b++;
       }
       if(targetB<l2_b){
       l2_b--;
       }
+      l1_b=255-l2_b;
+      
       counter=0;
-  }
-    
+ }
+    counter=counter+1;
   }
 
  
@@ -335,6 +341,6 @@ if(l2_en==1){
  analogWrite(Bs,l2_b);
  }
 
-counter++;
+
 delay(1); 
  }
