@@ -4,6 +4,7 @@
 <body>
 
 <h1>RGB Control</h1>
+<p>Projeto para controle de uma fita LED e um array de leds RGB de 4 pinos utilizando a comunicação entre uma placa Arduino nano e alguns componentes para controle de corrente.</p>
 <p>Projeto baseado na comunicação serial via USB entre um microcontrolador baseado em Atmega168 e biblioteca RXTX.</p>
 
 <p>Resultado final do circuito já instalado:</p>
