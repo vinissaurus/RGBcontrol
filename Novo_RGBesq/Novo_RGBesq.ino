@@ -6,6 +6,8 @@ int Bs= 3;
 int R = 11;
 int G = 10;
 int B = 9;
+int button=A0;
+
 //variáveis de leitura da EEPROM
 int l1_en=0;
 int l1_r=0;
@@ -31,6 +33,9 @@ String report="";
 String dataIn="";
 String dataOut="";
 
+unsigned int buttonCount=0;
+unsigned int buttonState=0;
+unsigned int buttonCase=0;
 
 void setup() {
  Serial.begin(115200);
@@ -42,6 +47,7 @@ void setup() {
  pinMode(R,OUTPUT);
  pinMode(G,OUTPUT);
  pinMode(B,OUTPUT);
+ pinMode(button,INPUT);
   
 
 
@@ -273,7 +279,53 @@ void randomBegin(){
   }
 
 
+
+void buttonRead(){
+  buttonState=digitalRead(button);
+  Serial.println(buttonState);
+  
+  if(buttonState==1){
+    buttonCount++;
+    }
+    
+    if(buttonState==0&&buttonCount>10){
+    if(buttonCount>30&&buttonCount<1000){
+    l1_en=1;
+    l2_en=1;
+    l1_r=random(0,255);
+    l1_g=random(0,255);
+    l1_b=random(0,255);
+    l2_r=l1_r;
+    l2_g=l1_g;
+    l2_b=l1_b;
+    analogWrite(R,l1_r);
+    analogWrite(G,l1_g);
+    analogWrite(B,l1_b);
+    analogWrite(Rs,l2_r);
+    analogWrite(Gs,l2_g);
+    analogWrite(Bs,l2_b);
+      }
+      
+    if(buttonCount>1100){
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(Rs,LOW);
+  digitalWrite(Gs,LOW);
+  digitalWrite(Bs,LOW);
+    l1_en=0;
+    l2_en=0;
+      }
+    
+    buttonCount=0;
+    }
+    
+    }
+  
+  
+
   void loop() {
+buttonRead();
 listenToPort();
 
 if(randomMode==1){
