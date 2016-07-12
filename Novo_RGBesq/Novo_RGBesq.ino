@@ -282,7 +282,7 @@ void randomBegin(){
 
 void buttonRead(){
   buttonState=digitalRead(button);
-  Serial.println(buttonState);
+  
   
   if(buttonState==1){
     buttonCount++;
