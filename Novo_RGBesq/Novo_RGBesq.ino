@@ -9,16 +9,19 @@ int B = 9;
 int button=A0;
 
 //variáveis de leitura da EEPROM
-int l1_en=0;
-int l1_r=0;
-int l1_g=0;
-int l1_b=0;
+unsigned int l1_en=0;
+unsigned int l1_r=0;
+unsigned int l1_g=0;
+unsigned int l1_b=0;
 
-int l2_en=0;
+unsigned int l2_en=0;
 unsigned int l2_r=0;
 unsigned int l2_g=0;
 unsigned int l2_b=0;
 
+int targetRs=255;
+int targetBs=255;
+int targetGs=255;
 int targetR=255;
 int targetB=255;
 int targetG=255;
@@ -60,14 +63,16 @@ randomSeed(analogRead(A2));
 void printReport(){
   //leitura de eeprom para variáveis
 l1_en=EEPROM.read(0);
-l1_r=EEPROM.read(1);
-l1_g=EEPROM.read(2);
-l1_b=EEPROM.read(3);
+targetR=EEPROM.read(1);
+targetG=EEPROM.read(2);
+targetB=EEPROM.read(3);
 
 l2_en=EEPROM.read(4);
-l2_r=EEPROM.read(5);
-l2_g=EEPROM.read(6);
-l2_b=EEPROM.read(7);
+targetRs=EEPROM.read(5);
+targetGs=EEPROM.read(6);
+targetBs=EEPROM.read(7);
+
+smooth();
 
 //smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
@@ -242,20 +247,38 @@ void initialTest(){
   if(dataIn.indexOf('@')==4){
     l1_en=dataIn.substring(dataIn.indexOf("l1en@")+5,dataIn.indexOf("@l1")).toInt();
     l2_en=dataIn.substring(dataIn.indexOf("l2en@")+5,dataIn.indexOf("@l2")).toInt();
-     
-    l1_r=dataIn.substring(dataIn.indexOf("r@")+2,dataIn.indexOf("@r")).toInt();
-    l1_g=dataIn.substring(dataIn.indexOf("g@")+2,dataIn.indexOf("@g")).toInt();
-    l1_b=dataIn.substring(dataIn.indexOf("b@")+2,dataIn.indexOf("@b")).toInt();
-       
-    l2_r=dataIn.substring(dataIn.indexOf("R@")+2,dataIn.indexOf("@R")).toInt();
-    l2_g=dataIn.substring(dataIn.indexOf("G@")+2,dataIn.indexOf("@G")).toInt();
-    l2_b=dataIn.substring(dataIn.indexOf("B@")+2,dataIn.indexOf("@B")).toInt();
-   
+    
+    if(l1_en==0){
+    targetR=0;
+    targetG=0;
+    targetB=0;
+    }
+
+    if(l2_en==0){
+    targetRs=0;
+    targetGs=0;
+    targetBs=0;
+    }    
+
+    if(l1_en==1){ 
+    targetR=dataIn.substring(dataIn.indexOf("r@")+2,dataIn.indexOf("@r")).toInt();
+    targetG=dataIn.substring(dataIn.indexOf("g@")+2,dataIn.indexOf("@g")).toInt();
+    targetB=dataIn.substring(dataIn.indexOf("b@")+2,dataIn.indexOf("@b")).toInt();
+    }
+
+    if(l2_en==1){ 
+    targetRs=dataIn.substring(dataIn.indexOf("R@")+2,dataIn.indexOf("@R")).toInt();
+    targetGs=dataIn.substring(dataIn.indexOf("G@")+2,dataIn.indexOf("@G")).toInt();
+    targetBs=dataIn.substring(dataIn.indexOf("B@")+2,dataIn.indexOf("@B")).toInt();
+    }
     
     spd=dataIn.substring(dataIn.indexOf("sp@")+3,dataIn.indexOf("@sp")).toInt();
     testSequence=dataIn.substring(dataIn.indexOf("ts@")+3,dataIn.indexOf("@ts")).toInt();
     randomMode=dataIn.substring(dataIn.indexOf("rdm@")+4,dataIn.indexOf("@rdm")).toInt();
     Serial.println("Config received!"); 
+    smooth();
+    
+    
     if(randomMode==1)randomBegin();
     }
     if(dataIn=="SAVE"){
@@ -279,6 +302,44 @@ void randomBegin(){
   }
 
 
+int tim=10;
+
+void smooth(){
+     while(true){
+      //for the common leds
+      if(l1_r>targetR)l1_r--;
+      if(l1_r<targetR)l1_r++;
+      
+      if(l1_g>targetG)l1_g--;
+      if(l1_g<targetG)l1_g++;
+      
+      if(l1_b>targetB)l1_b--;
+      if(l1_b<targetB)l1_b++;
+
+      //for the strip leds
+      if(l2_r>targetRs)l2_r--;
+      if(l2_r<targetRs)l2_r++;
+      
+      if(l2_g>targetGs)l2_g--;
+      if(l2_g<targetGs)l2_g++;
+      
+      if(l2_b>targetBs)l2_b--;
+      if(l2_b<targetBs)l2_b++;
+
+    analogWrite(R,l1_r);
+    analogWrite(G,l1_g);
+    analogWrite(B,l1_b);
+    analogWrite(Rs,l2_r);
+    analogWrite(Gs,l2_g);
+    analogWrite(Bs,l2_b);
+
+    delay(tim);
+
+    if(l1_r==targetR&&l1_g==targetG&&l1_b==targetB&&l2_r==targetRs&&l2_g==targetGs&&l2_b==targetBs)break;
+      }
+
+      Serial.println("ready");
+  }
 
 void buttonRead(){
   buttonState=digitalRead(button);
@@ -286,27 +347,17 @@ void buttonRead(){
   
   if(buttonState==1){
     buttonCount++;
-    }
-    
-    if(buttonState==0&&buttonCount>10){
-    if(buttonCount>30&&buttonCount<1000){
-    l1_en=1;
-    l2_en=1;
-    l1_r=random(0,255);
-    l1_g=random(0,255);
-    l1_b=random(0,255);
-    l2_r=l1_r;
-    l2_g=l1_g;
-    l2_b=l1_b;
-    analogWrite(R,l1_r);
-    analogWrite(G,l1_g);
-    analogWrite(B,l1_b);
-    analogWrite(Rs,l2_r);
-    analogWrite(Gs,l2_g);
-    analogWrite(Bs,l2_b);
-      }
+
+  if(buttonCount>1500){
+    targetR=0;
+    targetG=0;
+    targetB=0;
+    targetRs=0;
+    targetGs=0;
+    targetBs=0;
+ 
+    smooth();
       
-    if(buttonCount>1100){
   digitalWrite(R,LOW);
   digitalWrite(G,LOW);
   digitalWrite(B,LOW);
@@ -315,9 +366,55 @@ void buttonRead(){
   digitalWrite(Bs,LOW);
     l1_en=0;
     l2_en=0;
-      }
-    
     buttonCount=0;
+    delay(200);
+      }
+    }
+    
+    
+    if(buttonState==0&&buttonCount>10&&buttonCount<1000){
+       
+    if(l1_en==1){
+    targetR=random(0,255);
+    targetG=random(0,255);
+    targetB=random(0,255);
+    targetRs=targetR;
+    targetGs=targetG;
+    targetBs=targetB;
+
+    smooth();
+    
+    analogWrite(R,l1_r);
+    analogWrite(G,l1_g);
+    analogWrite(B,l1_b);
+    analogWrite(Rs,l2_r);
+    analogWrite(Gs,l2_g);
+    analogWrite(Bs,l2_b);
+    }
+
+    if(l1_en==0){
+   //leitura de eeprom para variáveis
+    l1_en=1;
+    l2_en=1;
+
+    targetR=EEPROM.read(1);
+    targetG=EEPROM.read(2);
+    targetB=EEPROM.read(3);
+    targetRs=EEPROM.read(5);
+    targetGs=EEPROM.read(6);
+    targetBs=EEPROM.read(7);
+    
+    smooth();
+
+    
+    analogWrite(R,l1_r);
+    analogWrite(G,l1_g);
+    analogWrite(B,l1_b);
+    analogWrite(Rs,l2_r);
+    analogWrite(Gs,l2_g);
+    analogWrite(Bs,l2_b);
+      }
+      buttonCount=0;
     }
     
     }
