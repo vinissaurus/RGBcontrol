@@ -26,10 +26,10 @@ int targetR=255;
 int targetB=255;
 int targetG=255;
 
-int spd=0;
-int waitTime=30;
+unsigned int spd=0;
 int testSequence=0;
 int randomMode=0;
+int smoothOn=0;
 unsigned int counter=0;
 
 String report="";
@@ -74,7 +74,7 @@ targetBs=EEPROM.read(7);
 
 smooth();
 
-//smoothOn=EEPROM.read(8);
+smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
 testSequence=EEPROM.read(10);
 randomMode=EEPROM.read(11);  
@@ -121,7 +121,7 @@ void saveConfig(){
   EEPROM.write(6,l2_g);
   EEPROM.write(7,l2_b);
 
-//  EEPROM.write(8,smoothOn);
+  EEPROM.write(8,smoothOn);
   EEPROM.write(9,spd);
   EEPROM.write(10,testSequence);
   EEPROM.write(11,randomMode);
@@ -130,110 +130,46 @@ void saveConfig(){
   }
 
 void initialTest(){
-  int t=500;
-  digitalWrite(R,LOW);
-  digitalWrite(G,LOW);
-  digitalWrite(B,LOW);
+    int testMatrix[8][3]={
+      {0,0,0},
+      {0,0,1},
+      {0,1,0},
+      {0,1,1},
+      {1,0,0},
+      {1,0,1},
+      {1,1,0},
+      {1,1,1}
+      };
+    int i,j;
+    spd=3;
+    for(i=0;i<8;i++){
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      if(testMatrix[i][0]==1)targetR=255;
+      if(testMatrix[i][1]==1)targetG=255;
+      if(testMatrix[i][2]==1)targetB=255;
+      smooth();
+      if(testMatrix[i][0]==1)targetR=0;
+      if(testMatrix[i][1]==1)targetG=0;
+      if(testMatrix[i][2]==1)targetB=0;
+      smooth();
+      }
 
-  digitalWrite(R,HIGH);
-  digitalWrite(G,LOW);
-  digitalWrite(B,LOW);
-  delay(t);
-
-  digitalWrite(R,LOW);
-  digitalWrite(G,HIGH);
-  digitalWrite(B,LOW);
-  delay(t);
-
-  digitalWrite(R,LOW);
-  digitalWrite(G,LOW);
-  digitalWrite(B,HIGH);
-  delay(t);
-
-  digitalWrite(R,HIGH);
-  digitalWrite(G,HIGH);
-  digitalWrite(B,LOW);
-  delay(t);
-
-  digitalWrite(R,HIGH);
-  digitalWrite(G,LOW);
-  digitalWrite(B,HIGH);
-  delay(t);
-
-  digitalWrite(R,LOW);
-  digitalWrite(G,HIGH);
-  digitalWrite(B,HIGH);
-  delay(t);
-
-  digitalWrite(R,HIGH);
-  digitalWrite(G,HIGH);
-  digitalWrite(B,HIGH);
-  delay(t);
-
-  digitalWrite(R,LOW);
-  digitalWrite(G,LOW);
-  digitalWrite(B,LOW);
-
-//Teste na fita led
-
-  digitalWrite(Rs,LOW);
-  digitalWrite(Gs,LOW);
-  digitalWrite(Bs,LOW);
-
-  digitalWrite(Rs,HIGH);
-  digitalWrite(Gs,LOW);
-  digitalWrite(Bs,LOW);
-  delay(t);
-
-  digitalWrite(Rs,LOW);
-  digitalWrite(Gs,HIGH);
-  digitalWrite(Bs,LOW);
-  delay(t);
-
-  digitalWrite(Rs,LOW);
-  digitalWrite(Gs,LOW);
-  digitalWrite(Bs,HIGH);
-  delay(t);
-
-  digitalWrite(Rs,HIGH);
-  digitalWrite(Gs,HIGH);
-  digitalWrite(Bs,LOW);
-  delay(t);
-
-  digitalWrite(Rs,HIGH);
-  digitalWrite(Gs,LOW);
-  digitalWrite(Bs,HIGH);
-  delay(t);
-
-  digitalWrite(Rs,LOW);
-  digitalWrite(Gs,HIGH);
-  digitalWrite(Bs,HIGH);
-  delay(t);
-
-  digitalWrite(Rs,HIGH);
-  digitalWrite(Gs,HIGH);
-  digitalWrite(Bs,HIGH);
-  delay(t);
-
-  digitalWrite(Rs,LOW);
-  digitalWrite(Gs,LOW);
-  digitalWrite(Bs,LOW);
-
-  int ad=10;
-  for(int i=0;i<255;i++){
-    analogWrite(Rs,i);
-    delay(ad);
-    }
-    for(int i=0;i<255;i++){
-    analogWrite(Gs,i);
-    delay(ad);
-    }
-    for(int i=0;i<255;i++){
-    analogWrite(Bs,i);
-    delay(ad);
-    }
-  
-    
+      for(i=0;i<8;i++){
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      if(testMatrix[i][0]==1)targetRs=255;
+      if(testMatrix[i][1]==1)targetGs=255;
+      if(testMatrix[i][2]==1)targetBs=255;
+      smooth();
+      if(testMatrix[i][0]==1)targetRs=0;
+      if(testMatrix[i][1]==1)targetGs=0;
+      if(testMatrix[i][2]==1)targetBs=0;
+      smooth();
+      }
+      
   }
   
 
@@ -244,9 +180,14 @@ void initialTest(){
   if(dataIn=="PING?"){
     Serial.println("PONG!");
     }
-  if(dataIn.indexOf('@')==4){
-    l1_en=dataIn.substring(dataIn.indexOf("l1en@")+5,dataIn.indexOf("@l1")).toInt();
-    l2_en=dataIn.substring(dataIn.indexOf("l2en@")+5,dataIn.indexOf("@l2")).toInt();
+  if(dataIn.indexOf(':')==2){
+    l1_en=dataIn.substring(dataIn.indexOf("l1:")+3,dataIn.indexOf(":l1")).toInt();
+    l2_en=dataIn.substring(dataIn.indexOf("l2:")+3,dataIn.indexOf(":l2")).toInt();
+    
+    smoothOn=dataIn.substring(dataIn.indexOf("e:")+2,dataIn.indexOf(":e")).toInt();
+    spd=dataIn.substring(dataIn.indexOf("s:")+2,dataIn.indexOf(":s")).toInt();
+    testSequence=dataIn.substring(dataIn.indexOf("t:")+2,dataIn.indexOf(":t")).toInt();
+    randomMode=dataIn.substring(dataIn.indexOf("m:")+2,dataIn.indexOf(":m")).toInt();
     
     if(l1_en==0){
     targetR=0;
@@ -261,21 +202,20 @@ void initialTest(){
     }    
 
     if(l1_en==1){ 
-    targetR=dataIn.substring(dataIn.indexOf("r@")+2,dataIn.indexOf("@r")).toInt();
-    targetG=dataIn.substring(dataIn.indexOf("g@")+2,dataIn.indexOf("@g")).toInt();
-    targetB=dataIn.substring(dataIn.indexOf("b@")+2,dataIn.indexOf("@b")).toInt();
+    targetR=dataIn.substring(dataIn.indexOf("r:")+2,dataIn.indexOf(":r")).toInt();
+    targetG=dataIn.substring(dataIn.indexOf("g:")+2,dataIn.indexOf(":g")).toInt();
+    targetB=dataIn.substring(dataIn.indexOf("b:")+2,dataIn.indexOf(":b")).toInt();
     }
 
     if(l2_en==1){ 
-    targetRs=dataIn.substring(dataIn.indexOf("R@")+2,dataIn.indexOf("@R")).toInt();
-    targetGs=dataIn.substring(dataIn.indexOf("G@")+2,dataIn.indexOf("@G")).toInt();
-    targetBs=dataIn.substring(dataIn.indexOf("B@")+2,dataIn.indexOf("@B")).toInt();
+    targetRs=dataIn.substring(dataIn.indexOf("R:")+2,dataIn.indexOf(":R")).toInt();
+    targetGs=dataIn.substring(dataIn.indexOf("G:")+2,dataIn.indexOf(":G")).toInt();
+    targetBs=dataIn.substring(dataIn.indexOf("B:")+2,dataIn.indexOf(":B")).toInt();
     }
-    
-    spd=dataIn.substring(dataIn.indexOf("sp@")+3,dataIn.indexOf("@sp")).toInt();
-    testSequence=dataIn.substring(dataIn.indexOf("ts@")+3,dataIn.indexOf("@ts")).toInt();
-    randomMode=dataIn.substring(dataIn.indexOf("rdm@")+4,dataIn.indexOf("@rdm")).toInt();
+
+  
     Serial.println("Config received!"); 
+    Serial.println(dataIn);
     smooth();
     
     
@@ -291,6 +231,7 @@ void initialTest(){
       printReport();
       }
   }
+  dataIn="";
   }
 
 
@@ -333,7 +274,7 @@ void smooth(){
     analogWrite(Gs,l2_g);
     analogWrite(Bs,l2_b);
 
-    delay(tim);
+    delay(spd);
 
     if(l1_r==targetR&&l1_g==targetG&&l1_b==targetB&&l2_r==targetRs&&l2_g==targetGs&&l2_b==targetBs)break;
       }

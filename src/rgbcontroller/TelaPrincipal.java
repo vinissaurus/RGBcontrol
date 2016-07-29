@@ -191,7 +191,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				message("BOARD:"+inputLine);
+				if(!inputLine.contains("ready"))message("BOARD:"+inputLine);
                                 readSerialMessage(inputLine);
                                 
 			} catch (Exception e) {
@@ -681,9 +681,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
         jLabel1.setText("Smooth speed");
 
+        speedSlider.setMaximum(15);
+        speedSlider.setMinimum(1);
         speedSlider.setSnapToTicks(true);
-        speedSlider.setValue(100);
-        speedSlider.setInverted(true);
         speedSlider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 speedSliderMouseReleased(evt);
@@ -757,12 +757,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1085,13 +1084,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1281,7 +1280,7 @@ consoleInput.requestFocus();
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void speedSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speedSliderMouseReleased
-speed=speedSlider.getValue();
+speed=speedSlider.getMaximum()-speedSlider.getValue();
 if(autoSend.isSelected())sendSettings();// TODO add your handling code here:
     }//GEN-LAST:event_speedSliderMouseReleased
 
@@ -1291,18 +1290,18 @@ sendSettings();        // TODO add your handling code here:
 
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
-sendSerialMessage("l1en@"+led1_status.isEnabled()
-        + "@l1enr@"+led1_rSlider.getValue()
-        +"@rg@"+led1_gSlider.getValue()
-        +"@gb@"+led1_bSlider.getValue()
-        +"@bl2en@"+led2_status.isEnabled()
-        +"@l2enR@"+led2_status.getR()
-        +"@RG@"+led2_status.getG()
-        +"@GB@"+led2_status.getB()
-        +"@Bsm@"+smooth
-        +"@smsp@"+speed
-        +"@spts@"+testOn
-        +"@tsrdm@"+randomMode+"@rdm");
+sendSerialMessage("l1:"+led1_status.isEnabled()
+        +":l1r:"+led1_rSlider.getValue()
+        +":rg:"+led1_gSlider.getValue()
+        +":gb:"+led1_bSlider.getValue()
+        +":bl2:"+led2_status.isEnabled()
+        +":l2R:"+led2_status.getR()
+        +":RG:"+led2_status.getG()
+        +":GB:"+led2_status.getB()
+        +":Be:"+smooth
+        +":es:"+speed
+        +":st:"+testOn
+        +":tm:"+randomMode+":m");
 habilitarEdicao(false);
 }
    
