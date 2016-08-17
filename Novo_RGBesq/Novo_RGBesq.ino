@@ -104,7 +104,9 @@ report+=spd;
 report+=",test=";
 report+=testSequence;
 report+=",random=";
-report+randomMode;
+report+=randomMode;
+report+=",smooth=";
+report+=smoothOn;
 report+="]";
 
 Serial.println(report);
@@ -195,7 +197,7 @@ void initialTest(){
     targetG=getValue(dataIn, ':', 2).toInt();
     targetB=getValue(dataIn, ':', 3).toInt();
     }
-    Serial.println(targetR);
+    
     l2_en=getValue(dataIn, ':', 4).toInt();
       if(l2_en==0){
     targetRs=0;
@@ -214,6 +216,15 @@ void initialTest(){
     testSequence=getValue(dataIn, ':', 10).toInt();
     randomMode=getValue(dataIn, ':', 11).toInt();
 
+    switch(smoothOn){
+      case 0:{
+        setColor();        
+        }
+      case 1:{
+        smooth();
+        }      
+      }
+      
       }
     
     if(dataIn=="SAVE"){
@@ -238,7 +249,22 @@ void randomBegin(){
   }
 
 
-int tim=10;
+void setColor(){
+    l1_r=targetR;
+    l1_g=targetG;
+    l1_b=targetB;
+
+    l2_r=targetRs;
+    l2_g=targetGs;
+    l2_b=targetBs;
+
+   analogWrite(R,l1_r);
+    analogWrite(G,l1_g);
+    analogWrite(B,l1_b);
+    analogWrite(Rs,l2_r);
+    analogWrite(Gs,l2_g);
+    analogWrite(Bs,l2_b);
+  }
 
 void smooth(){
      while(true){

@@ -221,30 +221,71 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         case 0:led2_checkBox.setSelected(false);
         case 1:led2_checkBox.setSelected(true);
     }
+      
     led2_rSlider.setValue(led2_status.getR());
     led2_gSlider.setValue(led2_status.getG());
     led2_bSlider.setValue(led2_status.getB());
+    
+    speedSlider.setValue(speedSlider.getMaximum()-speed);
+    
+    switch(testOn){
+        case 1:testCheckBox.setSelected(true);
+        case 0:testCheckBox.setSelected(false);
+    }
+    
+    switch(randomMode){
+        case 1:randomCheckBox.setSelected(true);
+        case 0:randomCheckBox.setSelected(false);
+    }
+    
+     switch(smooth){
+        case 1:smoothCheckBox.setSelected(true);
+        case 0:smoothCheckBox.setSelected(false);
+    }
+    
     }
     
     void readSerialMessage(String s){
     if(s.contains("(reportStatus")){
+        
     message("Contains report status!");
     led1_status.setEnabled(Integer.parseInt(s.substring(s.indexOf("led1:en=")+8,s.indexOf(","))));
-     s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+     s=s.substring(s.indexOf(",")+1,s.length());//comma break
+     
     led1_status.setR(Integer.parseInt(s.substring(s.indexOf("r=")+2,s.indexOf(","))));
-    s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    
     led1_status.setG(Integer.parseInt(s.substring(s.indexOf("g=")+2,s.indexOf(","))));
-    s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+   
     led1_status.setB(Integer.parseInt(s.substring(s.indexOf("b=")+2,s.indexOf("]"))));
-    s=s.substring(s.indexOf("[")+1,s.length()-1);//comma break
+    s=s.substring(s.indexOf("[")+1,s.length());//comma break
+    
     
     led2_status.setEnabled(Integer.parseInt(s.substring(s.indexOf("led2:en=")+8,s.indexOf(","))));
-     s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+     s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    
     led2_status.setR(Integer.parseInt(s.substring(s.indexOf("r=")+2,s.indexOf(","))));
-    s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+   
     led2_status.setG(Integer.parseInt(s.substring(s.indexOf("g=")+2,s.indexOf(","))));
-    s=s.substring(s.indexOf(",")+1,s.length()-1);//comma break
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    
     led2_status.setB(Integer.parseInt(s.substring(s.indexOf("b=")+2,s.indexOf("]"))));
+    s=s.substring(s.indexOf("[other:")+7,s.length());//comma break
+    
+    
+    
+    speed=Integer.parseInt(s.substring(s.indexOf("speed=")+6,s.indexOf(",")));
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    
+    testOn=Integer.parseInt(s.substring(s.indexOf("test=")+5,s.indexOf(",")));
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+        
+    randomMode=Integer.parseInt(s.substring(s.indexOf("random=")+7,s.indexOf(",")));
+   s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    smooth=Integer.parseInt(s.substring(s.indexOf("smooth=")+7,s.indexOf("]")));
+       
     message("Report status read:\n"
             + "Led1 enabled:"+led1_status.isEnabled()+"\n"
             + "("+led1_status.getR()+","+led1_status.getG()+","+led1_status.getB()+")\n"
@@ -1269,7 +1310,7 @@ consoleInput.requestFocus();
         led2_clone.setEnabled(led2_checkBox.isSelected());
         led2_random.setEnabled(led2_checkBox.isSelected());
 
-        if(led2_checkBox.isSelected())led2_status.setEnabled(1);
+        if(led2_checkBox.isSelected()){led2_status.setEnabled(1);}
         if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
