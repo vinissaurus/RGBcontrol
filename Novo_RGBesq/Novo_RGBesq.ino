@@ -180,47 +180,42 @@ void initialTest(){
   if(dataIn=="PING?"){
     Serial.println("PONG!");
     }
-  if(dataIn.indexOf(':')==2){
-    l1_en=dataIn.substring(dataIn.indexOf("l1:")+3,dataIn.indexOf(":l1")).toInt();
-    l2_en=dataIn.substring(dataIn.indexOf("l2:")+3,dataIn.indexOf(":l2")).toInt();
-    
-    smoothOn=dataIn.substring(dataIn.indexOf("e:")+2,dataIn.indexOf(":e")).toInt();
-    spd=dataIn.substring(dataIn.indexOf("s:")+2,dataIn.indexOf(":s")).toInt();
-    testSequence=dataIn.substring(dataIn.indexOf("t:")+2,dataIn.indexOf(":t")).toInt();
-    randomMode=dataIn.substring(dataIn.indexOf("m:")+2,dataIn.indexOf(":m")).toInt();
-    
-    if(l1_en==0){
-    targetR=0;
-    targetG=0;
-    targetB=0;
-    }
 
-    if(l2_en==0){
+    if(dataIn.indexOf(':')!=0){
+        l1_en =getValue(dataIn, ':', 0).toInt();
+        
+      if(l1_en==0){
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      }
+
+          if(l1_en==1){ 
+    targetR=getValue(dataIn, ':', 1).toInt();
+    targetG=getValue(dataIn, ':', 2).toInt();
+    targetB=getValue(dataIn, ':', 3).toInt();
+    }
+    Serial.println(targetR);
+    l2_en=getValue(dataIn, ':', 4).toInt();
+      if(l2_en==0){
     targetRs=0;
     targetGs=0;
     targetBs=0;
-    }    
-
-    if(l1_en==1){ 
-    targetR=dataIn.substring(dataIn.indexOf("r:")+2,dataIn.indexOf(":r")).toInt();
-    targetG=dataIn.substring(dataIn.indexOf("g:")+2,dataIn.indexOf(":g")).toInt();
-    targetB=dataIn.substring(dataIn.indexOf("b:")+2,dataIn.indexOf(":b")).toInt();
     }
 
     if(l2_en==1){ 
-    targetRs=dataIn.substring(dataIn.indexOf("R:")+2,dataIn.indexOf(":R")).toInt();
-    targetGs=dataIn.substring(dataIn.indexOf("G:")+2,dataIn.indexOf(":G")).toInt();
-    targetBs=dataIn.substring(dataIn.indexOf("B:")+2,dataIn.indexOf(":B")).toInt();
+    targetRs=getValue(dataIn, ':', 5).toInt();
+    targetGs=getValue(dataIn, ':', 6).toInt();
+    targetBs=getValue(dataIn, ':', 7).toInt();
     }
 
-  
-    Serial.println("Config received!"); 
-    Serial.println(dataIn);
-    smooth();
+    smoothOn=getValue(dataIn, ':', 8).toInt();
+    spd=getValue(dataIn, ':', 9).toInt();
+    testSequence=getValue(dataIn, ':', 10).toInt();
+    randomMode=getValue(dataIn, ':', 11).toInt();
+
+      }
     
-    
-    if(randomMode==1)randomBegin();
-    }
     if(dataIn=="SAVE"){
       saveConfig();
       }
@@ -434,3 +429,22 @@ if(l2_en==1){
 
 delay(1); 
  }
+
+
+
+ String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length()-1;
+
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+  }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
+}

@@ -1189,12 +1189,6 @@ consoleInput.setText("");
  if(autoSend.isSelected()) sendSettings();
     }//GEN-LAST:event_randomCheckBoxActionPerformed
 
-    private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
-  if(smoothCheckBox.isSelected()){smooth=1;}
-  if(!smoothCheckBox.isSelected()){smooth=0;}
-  if(autoSend.isSelected())sendSettings();
-    }//GEN-LAST:event_smoothCheckBoxActionPerformed
-
     private void testCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testCheckBoxActionPerformed
  if(testCheckBox.isSelected())testOn=1;
   if(!testCheckBox.isSelected())testOn=0;
@@ -1288,21 +1282,27 @@ if(autoSend.isSelected())sendSettings();// TODO add your handling code here:
 sendSettings();        // TODO add your handling code here:
     }//GEN-LAST:event_sendActionPerformed
 
+    private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
+        if(smoothCheckBox.isSelected()){smooth=1;}
+        if(!smoothCheckBox.isSelected()){smooth=0;}
+        if(autoSend.isSelected())sendSettings();
+    }//GEN-LAST:event_smoothCheckBoxActionPerformed
+
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
-sendSerialMessage("l1:"+led1_status.isEnabled()
-        +":l1r:"+led1_rSlider.getValue()
-        +":rg:"+led1_gSlider.getValue()
-        +":gb:"+led1_bSlider.getValue()
-        +":bl2:"+led2_status.isEnabled()
-        +":l2R:"+led2_status.getR()
-        +":RG:"+led2_status.getG()
-        +":GB:"+led2_status.getB()
-        +":Be:"+smooth
-        +":es:"+speed
-        +":st:"+testOn
-        +":tm:"+randomMode+":m");
-habilitarEdicao(false);
+sendSerialMessage(led1_status.isEnabled()+":"
+        +led1_rSlider.getValue()+":"
+        +led1_gSlider.getValue()+":"
+        +led1_bSlider.getValue()+":"
+        +led2_status.isEnabled()+":"
+        +led2_status.getR()+":"
+        +led2_status.getG()+":"
+        +led2_status.getB()+":"
+        +smooth+":"
+        +speed+":"
+        +testOn+":"
+        +randomMode+":");
+//habilitarEdicao(false);
 }
    
     /**
