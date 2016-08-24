@@ -224,6 +224,7 @@ void initialTest(){
         smooth();
         }      
       }
+
       
       }
     
@@ -238,6 +239,8 @@ void initialTest(){
       }
   }
   dataIn="";
+
+  
   }
 
 

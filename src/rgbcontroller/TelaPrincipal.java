@@ -50,8 +50,8 @@ class LedStatus {
         this.b = b;
     }
 
-    public void setEnabled(int b){
-    this.enabled=b;
+    public void setEnabled(int en){
+    this.enabled=en;
     }
     
     public int isEnabled(){
@@ -85,7 +85,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     
     Random rand = new Random();
 
-   
+   String inputLine="";
   
     
     LedStatus led1_status;
@@ -190,7 +190,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 	public synchronized void serialEvent(SerialPortEvent oEvent) {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
-				String inputLine=input.readLine();
+				inputLine=input.readLine();
 				if(!inputLine.contains("ready"))message("BOARD:"+inputLine);
                                 readSerialMessage(inputLine);
                                 
@@ -209,40 +209,35 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     }
 
     void refreshFields(){
-    switch(led1_status.isEnabled()){
-        case 0:led1_checkBox.setSelected(false);
-        case 1:led1_checkBox.setSelected(true);
-    }
+    led1_checkBox.setSelected(led1_status.isEnabled()==1?true:false);
+        
+        
     led1_rSlider.setValue(led1_status.getR());
     led1_gSlider.setValue(led1_status.getG());
     led1_bSlider.setValue(led1_status.getB());
     
-      switch(led2_status.isEnabled()){
-        case 0:led2_checkBox.setSelected(false);
-        case 1:led2_checkBox.setSelected(true);
-    }
+    led1_rSlider.setEnabled(led1_status.isEnabled()==1?true:false);
+    led1_gSlider.setEnabled(led1_status.isEnabled()==1?true:false);
+    led1_bSlider.setEnabled(led1_status.isEnabled()==1?true:false);
+    
+    led2_checkBox.setSelected(led2_status.isEnabled()==1?true:false);
       
     led2_rSlider.setValue(led2_status.getR());
     led2_gSlider.setValue(led2_status.getG());
     led2_bSlider.setValue(led2_status.getB());
     
+    led2_rSlider.setEnabled(led2_status.isEnabled()==1?true:false);
+    led2_gSlider.setEnabled(led2_status.isEnabled()==1?true:false);
+    led2_bSlider.setEnabled(led2_status.isEnabled()==1?true:false);
+    
     speedSlider.setValue(speedSlider.getMaximum()-speed);
     
-    switch(testOn){
-        case 1:testCheckBox.setSelected(true);
-        case 0:testCheckBox.setSelected(false);
-    }
+    testCheckBox.setSelected(testOn==1?true:false);
+  
+    randomCheckBox.setSelected(randomMode==1?true:false);
     
-    switch(randomMode){
-        case 1:randomCheckBox.setSelected(true);
-        case 0:randomCheckBox.setSelected(false);
-    }
-    
-     switch(smooth){
-        case 1:smoothCheckBox.setSelected(true);
-        case 0:smoothCheckBox.setSelected(false);
-    }
-    
+    smoothCheckBox.setSelected(smooth==1?true:false);
+        
     }
     
     void readSerialMessage(String s){
@@ -297,11 +292,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     
   
     
-    if(s.contains("ready")){habilitarEdicao(true);}
+   if(s.contains("ready")){enableEdition(true);}
    
     }
     
-    void habilitarEdicao(boolean t){
+    void enableEdition(boolean t){
     led1_checkBox.setEnabled(t);
     led1_rSlider.setEnabled(t);
     led1_gSlider.setEnabled(t);
@@ -315,6 +310,16 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     led2_bSlider.setEnabled(t);
     led2_clone.setEnabled(t);
     led2_random.setEnabled(t);
+    
+    randomCheckBox.setEnabled(t);
+    smoothCheckBox.setEnabled(t);
+    testCheckBox.setEnabled(t);
+    autoSendCheckBox.setEnabled(t);
+    
+    speedSlider.setEnabled(t);
+    sendButton.setEnabled(t);
+    loadButton.setEnabled(t);
+    saveButton.setEnabled(t);
     refreshFields();
     }
     
@@ -388,14 +393,14 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         smoothCheckBox = new javax.swing.JCheckBox();
         randomCheckBox = new javax.swing.JCheckBox();
         testCheckBox = new javax.swing.JCheckBox();
-        autoSend = new javax.swing.JCheckBox();
+        autoSendCheckBox = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         speedSlider = new javax.swing.JSlider();
         jPanel7 = new javax.swing.JPanel();
-        send = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        sendButton = new javax.swing.JButton();
+        loadButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         led2_checkBox = new javax.swing.JCheckBox();
         led2_rSlider = new javax.swing.JSlider();
@@ -710,13 +715,13 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(testCheckBox, gridBagConstraints);
 
-        autoSend.setSelected(true);
-        autoSend.setText("Auto-send");
+        autoSendCheckBox.setSelected(true);
+        autoSendCheckBox.setText("Auto-send");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel3.add(autoSend, gridBagConstraints);
+        jPanel3.add(autoSendCheckBox, gridBagConstraints);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -756,21 +761,21 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel7.setLayout(new java.awt.GridBagLayout());
 
-        send.setText("SEND");
-        send.addActionListener(new java.awt.event.ActionListener() {
+        sendButton.setText("SEND");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendActionPerformed(evt);
+                sendButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.ipadx = 16;
         gridBagConstraints.ipady = 10;
-        jPanel7.add(send, gridBagConstraints);
+        jPanel7.add(sendButton, gridBagConstraints);
 
-        jButton1.setText("LOAD");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        loadButton.setText("LOAD");
+        loadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loadButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -778,12 +783,12 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 16;
         gridBagConstraints.ipady = 10;
-        jPanel7.add(jButton1, gridBagConstraints);
+        jPanel7.add(loadButton, gridBagConstraints);
 
-        jButton2.setText("SAVE");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("SAVE");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -791,7 +796,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 16;
         gridBagConstraints.ipady = 10;
-        jPanel7.add(jButton2, gridBagConstraints);
+        jPanel7.add(saveButton, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1153,15 +1158,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void led1_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led1_checkBoxStateChanged
-        led1_rSlider.setEnabled(led1_checkBox.isSelected());
-        led1_gSlider.setEnabled(led1_checkBox.isSelected());
-        led1_bSlider.setEnabled(led1_checkBox.isSelected());
-        led1_clone.setEnabled(led1_checkBox.isSelected());
-        led1_random.setEnabled(led1_checkBox.isSelected());
-        
-        
-        if(led1_checkBox.isSelected())led1_status.setEnabled(1);
-        if(!led1_checkBox.isSelected())led1_status.setEnabled(0);
+       
         //sendSettings();
     }//GEN-LAST:event_led1_checkBoxStateChanged
 
@@ -1188,7 +1185,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rSlider.setValue(led1_status.getR());
         led1_gSlider.setValue(led1_status.getG());
         led1_bSlider.setValue(led1_status.getB());
-        if(autoSend.isSelected())sendSettings();
+        if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led1_cloneActionPerformed
 
     private void led1_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_randomActionPerformed
@@ -1196,27 +1193,37 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_rSlider.setValue(led1_status.getR());
         led1_gSlider.setValue(led1_status.getG());
         led1_bSlider.setValue(led1_status.getB());
-        if(autoSend.isSelected())sendSettings();
+        if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led1_randomActionPerformed
 
     private void led1_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_rSliderMouseReleased
-if(autoSend.isSelected())sendSettings();
+if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led1_rSliderMouseReleased
 
     private void led1_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_gSliderMouseReleased
-if(autoSend.isSelected())sendSettings();
+if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led1_gSliderMouseReleased
 
     private void led1_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led1_bSliderMouseReleased
-if(autoSend.isSelected())sendSettings();
+if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led1_bSliderMouseReleased
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 sendSerialMessage("SAVE");        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     private void led1_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led1_checkBoxActionPerformed
-if(autoSend.isSelected())sendSettings();    // TODO add your handling code here:
+ led1_rSlider.setEnabled(led1_checkBox.isSelected());
+        led1_gSlider.setEnabled(led1_checkBox.isSelected());
+        led1_bSlider.setEnabled(led1_checkBox.isSelected());
+        led1_clone.setEnabled(led1_checkBox.isSelected());
+        led1_random.setEnabled(led1_checkBox.isSelected());
+        
+        
+        if(led1_checkBox.isSelected())led1_status.setEnabled(1);
+        if(!led1_checkBox.isSelected())led1_status.setEnabled(0);
+        
+        if(autoSendCheckBox.isSelected())sendSettings();    // TODO add your handling code here:
     }//GEN-LAST:event_led1_checkBoxActionPerformed
 
     private void consoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleInputActionPerformed
@@ -1227,18 +1234,19 @@ consoleInput.setText("");
     private void randomCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomCheckBoxActionPerformed
  if(randomCheckBox.isSelected())randomMode=1;
   if(!randomCheckBox.isSelected())randomMode=0;
- if(autoSend.isSelected()) sendSettings();
+ if(autoSendCheckBox.isSelected()) sendSettings();
     }//GEN-LAST:event_randomCheckBoxActionPerformed
 
     private void testCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testCheckBoxActionPerformed
  if(testCheckBox.isSelected())testOn=1;
   if(!testCheckBox.isSelected())testOn=0;
-  if(autoSend.isSelected())sendSettings();
+  if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_testCheckBoxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
 sendSerialMessage("REPORT");
-    }//GEN-LAST:event_jButton1ActionPerformed
+enableEdition(false);
+    }//GEN-LAST:event_loadButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 sendSerialMessage(consoleInput.getText());
@@ -1258,7 +1266,7 @@ consoleInput.requestFocus();
         led2_rSlider.setValue(led2_status.getR());
         led2_gSlider.setValue(led2_status.getG());
         led2_bSlider.setValue(led2_status.getB());
-        if(autoSend.isSelected())sendSettings();
+        if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led2_cloneActionPerformed
 
     private void led2_randomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_randomActionPerformed
@@ -1266,11 +1274,11 @@ consoleInput.requestFocus();
         led2_rSlider.setValue(led2_status.getR());
         led2_gSlider.setValue(led2_status.getG());
         led2_bSlider.setValue(led2_status.getB());
-        if(autoSend.isSelected())sendSettings();
+        if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_led2_randomActionPerformed
 
     private void led2_gSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_gSliderMouseReleased
-        if(autoSend.isSelected())sendSettings();        // TODO add your handling code here:
+        if(autoSendCheckBox.isSelected())sendSettings();        // TODO add your handling code here:
     }//GEN-LAST:event_led2_gSliderMouseReleased
 
     private void led2_gSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_gSliderStateChanged
@@ -1280,7 +1288,7 @@ consoleInput.requestFocus();
     }//GEN-LAST:event_led2_gSliderStateChanged
 
     private void led2_bSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_bSliderMouseReleased
-        if(autoSend.isSelected())sendSettings();       // TODO add your handling code here:
+        if(autoSendCheckBox.isSelected())sendSettings();       // TODO add your handling code here:
     }//GEN-LAST:event_led2_bSliderMouseReleased
 
     private void led2_bSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_bSliderStateChanged
@@ -1290,7 +1298,7 @@ consoleInput.requestFocus();
     }//GEN-LAST:event_led2_bSliderStateChanged
 
     private void led2_rSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_led2_rSliderMouseReleased
-        if(autoSend.isSelected())sendSettings();       // TODO add your handling code here:
+        if(autoSendCheckBox.isSelected())sendSettings();       // TODO add your handling code here:
     }//GEN-LAST:event_led2_rSliderMouseReleased
 
     private void led2_rSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_rSliderStateChanged
@@ -1300,11 +1308,7 @@ consoleInput.requestFocus();
     }//GEN-LAST:event_led2_rSliderStateChanged
 
     private void led2_checkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_led2_checkBoxActionPerformed
-        if(autoSend.isSelected())sendSettings();
-    }//GEN-LAST:event_led2_checkBoxActionPerformed
-
-    private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
-        led2_rSlider.setEnabled(led2_checkBox.isSelected());
+      led2_rSlider.setEnabled(led2_checkBox.isSelected());
         led2_gSlider.setEnabled(led2_checkBox.isSelected());
         led2_bSlider.setEnabled(led2_checkBox.isSelected());
         led2_clone.setEnabled(led2_checkBox.isSelected());
@@ -1312,21 +1316,27 @@ consoleInput.requestFocus();
 
         if(led2_checkBox.isSelected()){led2_status.setEnabled(1);}
         if(!led2_checkBox.isSelected())led2_status.setEnabled(0);
+        
+        if(autoSendCheckBox.isSelected())sendSettings();   
+    }//GEN-LAST:event_led2_checkBoxActionPerformed
+
+    private void led2_checkBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_led2_checkBoxStateChanged
+        
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void speedSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speedSliderMouseReleased
 speed=speedSlider.getMaximum()-speedSlider.getValue();
-if(autoSend.isSelected())sendSettings();// TODO add your handling code here:
+if(autoSendCheckBox.isSelected())sendSettings();// TODO add your handling code here:
     }//GEN-LAST:event_speedSliderMouseReleased
 
-    private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 sendSettings();        // TODO add your handling code here:
-    }//GEN-LAST:event_sendActionPerformed
+    }//GEN-LAST:event_sendButtonActionPerformed
 
     private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
         if(smoothCheckBox.isSelected()){smooth=1;}
         if(!smoothCheckBox.isSelected()){smooth=0;}
-        if(autoSend.isSelected())sendSettings();
+        if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_smoothCheckBoxActionPerformed
 
     
@@ -1343,7 +1353,7 @@ sendSerialMessage(led1_status.isEnabled()+":"
         +speed+":"
         +testOn+":"
         +randomMode+":");
-//habilitarEdicao(false);
+enableEdition(false);
 }
    
     /**
@@ -1377,11 +1387,9 @@ sendSerialMessage(led1_status.isEnabled()+":"
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox autoSend;
+    private javax.swing.JCheckBox autoSendCheckBox;
     private javax.swing.JTextField consoleInput;
     private javax.swing.JTextArea consoleOut;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -1417,8 +1425,10 @@ sendSerialMessage(led1_status.isEnabled()+":"
     private javax.swing.JPanel led2_rPanel;
     private javax.swing.JSlider led2_rSlider;
     private javax.swing.JButton led2_random;
+    private javax.swing.JButton loadButton;
     private javax.swing.JCheckBox randomCheckBox;
-    private javax.swing.JButton send;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JButton sendButton;
     private javax.swing.JCheckBox smoothCheckBox;
     private javax.swing.JSlider speedSlider;
     private javax.swing.JCheckBox testCheckBox;
