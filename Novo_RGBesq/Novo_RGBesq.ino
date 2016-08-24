@@ -54,15 +54,21 @@ void setup() {
   
 
 
+readReport();
+if(testSequence==1&&! Serial.available()){initialTest();}
 
+readReport();
+if(smoothOn==1)smooth();
+
+if(smoothOn==0)setColor();
 printReport();
-if(testSequence==1){initialTest();}
 randomSeed(analogRead(A2));
 }
 
-void printReport(){
+void readReport(){
   //leitura de eeprom para variáveis
-l1_en=EEPROM.read(0);
+
+  l1_en=EEPROM.read(0);
 targetR=EEPROM.read(1);
 targetG=EEPROM.read(2);
 targetB=EEPROM.read(3);
@@ -72,12 +78,17 @@ targetRs=EEPROM.read(5);
 targetGs=EEPROM.read(6);
 targetBs=EEPROM.read(7);
 
-smooth();
 
 smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
 testSequence=EEPROM.read(10);
-randomMode=EEPROM.read(11);  
+randomMode=EEPROM.read(11); 
+  }
+
+void printReport(){
+  
+
+
 report="";
 report+="(reportStatus)[led1:en=";
 report+=l1_en;
@@ -132,6 +143,19 @@ void saveConfig(){
   }
 
 void initialTest(){
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      spd=1;
+      int waitTime=300;
+
+      int testCase=0;
+    
+    while(testCase<2){  
     int testMatrix[8][3]={
       {0,0,0},
       {0,0,1},
@@ -143,7 +167,7 @@ void initialTest(){
       {1,1,1}
       };
     int i,j;
-    spd=3;
+    
     for(i=0;i<8;i++){
       targetR=0;
       targetG=0;
@@ -151,11 +175,13 @@ void initialTest(){
       if(testMatrix[i][0]==1)targetR=255;
       if(testMatrix[i][1]==1)targetG=255;
       if(testMatrix[i][2]==1)targetB=255;
-      smooth();
+      if(testCase==0){setColor();delay(waitTime);}
+      if(testCase==1)smooth();
       if(testMatrix[i][0]==1)targetR=0;
       if(testMatrix[i][1]==1)targetG=0;
       if(testMatrix[i][2]==1)targetB=0;
-      smooth();
+        if(testCase==0){setColor();delay(waitTime);}
+      if(testCase==1)smooth();
       }
 
       for(i=0;i<8;i++){
@@ -165,13 +191,18 @@ void initialTest(){
       if(testMatrix[i][0]==1)targetRs=255;
       if(testMatrix[i][1]==1)targetGs=255;
       if(testMatrix[i][2]==1)targetBs=255;
-      smooth();
+         if(testCase==0){setColor();delay(waitTime);}
+      if(testCase==1)smooth();
       if(testMatrix[i][0]==1)targetRs=0;
       if(testMatrix[i][1]==1)targetGs=0;
       if(testMatrix[i][2]==1)targetBs=0;
-      smooth();
-      }
+        if(testCase==0){setColor();delay(waitTime);}
+      if(testCase==1)smooth();
       
+      }
+      testCase++;
+    }//end of while(case<2)
+   spd=EEPROM.read(9);   
   }
   
 
@@ -179,6 +210,20 @@ void initialTest(){
  void listenToPort(){
   if(Serial.available()){
   dataIn=Serial.readString();
+
+      if(dataIn=="SAVE"){
+      saveConfig();
+      }
+    if(dataIn=="TEST"){
+      initialTest();
+      readReport();
+      if(smoothOn==1)smooth();
+      if(smoothOn==0)setColor();
+      }
+    if(dataIn=="REPORT"){
+      readReport();
+      printReport();
+      }
   if(dataIn=="PING?"){
     Serial.println("PONG!");
     }
@@ -228,15 +273,7 @@ void initialTest(){
       
       }
     
-    if(dataIn=="SAVE"){
-      saveConfig();
-      }
-    if(dataIn=="TEST"){
-      initialTest();
-      }
-    if(dataIn=="REPORT"){
-      printReport();
-      }
+
   }
   dataIn="";
 
@@ -252,7 +289,7 @@ void randomBegin(){
   }
 
 
-void setColor(){
+void setColor(){//método para definir a cor sem suavizar
     l1_r=targetR;
     l1_g=targetG;
     l1_b=targetB;
@@ -269,7 +306,7 @@ void setColor(){
     analogWrite(Bs,l2_b);
   }
 
-void smooth(){
+void smooth(){//método para definir a cor com suavização
      while(true){
       //for the common leds
       if(l1_r>targetR)l1_r--;
