@@ -94,7 +94,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     int smooth=0;
     int testOn=0;
     int randomMode=0;
-   
+    int colorHoldTime=0;
     String message = "";//String destinada ao uso de mensagens no console
 
         
@@ -238,6 +238,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     
     smoothCheckBox.setSelected(smooth==1?true:false);
         
+    colorHoldSlider.setValue(colorHoldTime);
     }
     
     void readSerialMessage(String s){
@@ -278,9 +279,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
     s=s.substring(s.indexOf(",")+1,s.length());//comma break
         
     randomMode=Integer.parseInt(s.substring(s.indexOf("random=")+7,s.indexOf(",")));
-   s=s.substring(s.indexOf(",")+1,s.length());//comma break
-    smooth=Integer.parseInt(s.substring(s.indexOf("smooth=")+7,s.indexOf("]")));
-       
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    smooth=Integer.parseInt(s.substring(s.indexOf("smooth=")+7,s.indexOf(",")));
+    s=s.substring(s.indexOf(",")+1,s.length());//comma break
+    colorHoldTime=Integer.parseInt(s.substring(s.indexOf("colorHoldTime=")+14,s.indexOf("]")));
+    
     message("Report status read:\n"
             + "Led1 enabled:"+led1_status.isEnabled()+"\n"
             + "("+led1_status.getR()+","+led1_status.getG()+","+led1_status.getB()+")\n"
@@ -397,6 +400,9 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         speedSlider = new javax.swing.JSlider();
+        jLabel2 = new javax.swing.JLabel();
+        colorHoldSlider = new javax.swing.JSlider();
+        holdTimeLabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         sendButton = new javax.swing.JButton();
         loadButton = new javax.swing.JButton();
@@ -736,6 +742,22 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             }
         });
 
+        jLabel2.setText("Color hold time");
+
+        colorHoldSlider.setValue(0);
+        colorHoldSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                colorHoldSliderStateChanged(evt);
+            }
+        });
+        colorHoldSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                colorHoldSliderMouseReleased(evt);
+            }
+        });
+
+        holdTimeLabel.setText(" ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -743,20 +765,31 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(speedSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(speedSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(colorHoldSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(holdTimeLabel)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(holdTimeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(colorHoldSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1146,10 +1179,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -1335,8 +1368,16 @@ sendSettings();        // TODO add your handling code here:
     private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
         if(smoothCheckBox.isSelected()){smooth=1;}
         if(!smoothCheckBox.isSelected()){smooth=0;}
-        if(autoSendCheckBox.isSelected())sendSettings();
+         if(autoSendCheckBox.isSelected())sendSettings();
     }//GEN-LAST:event_smoothCheckBoxActionPerformed
+
+    private void colorHoldSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorHoldSliderMouseReleased
+     if(autoSendCheckBox.isSelected())sendSettings();  // TODO add your handling code here:
+    }//GEN-LAST:event_colorHoldSliderMouseReleased
+
+    private void colorHoldSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colorHoldSliderStateChanged
+  holdTimeLabel.setText(""+colorHoldSlider.getValue());        // TODO add your handling code here:
+    }//GEN-LAST:event_colorHoldSliderStateChanged
 
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
@@ -1351,7 +1392,8 @@ sendSerialMessage(led1_status.isEnabled()+":"
         +smooth+":"
         +speed+":"
         +testOn+":"
-        +randomMode+":");
+        +randomMode+":"
+        +colorHoldSlider.getValue()+":");
 enableEdition(false);
 }
    
@@ -1387,11 +1429,14 @@ enableEdition(false);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox autoSendCheckBox;
+    private javax.swing.JSlider colorHoldSlider;
     private javax.swing.JTextField consoleInput;
     private javax.swing.JTextArea consoleOut;
+    private javax.swing.JLabel holdTimeLabel;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;

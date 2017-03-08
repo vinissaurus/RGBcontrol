@@ -29,6 +29,7 @@ int targetG=255;
 unsigned int spd=0;
 int testSequence=0;
 int randomMode=0;
+int colorHoldTime=0;
 int smoothOn=0;
 unsigned int counter=0;
 
@@ -89,6 +90,7 @@ smoothOn=EEPROM.read(8);
 spd=EEPROM.read(9);
 testSequence=EEPROM.read(10);
 randomMode=EEPROM.read(11); 
+colorHoldTime=EEPROM.read(12);
   }
 
 void printReport(){
@@ -122,6 +124,8 @@ report+=",random=";
 report+=randomMode;
 report+=",smooth=";
 report+=smoothOn;
+report+=",colorHoldTime=";
+report+=colorHoldTime;
 report+="]";
 
 Serial.println(report);
@@ -142,7 +146,8 @@ void saveConfig(){
   EEPROM.write(9,spd);
   EEPROM.write(10,testSequence);
   EEPROM.write(11,randomMode);
-
+  EEPROM.write(12,colorHoldTime);
+  
   Serial.println("Settings saved to EEPROM!");
   }
 
@@ -266,6 +271,7 @@ void initialTest(){
     spd=getValue(dataIn, ':', 9).toInt();
     testSequence=getValue(dataIn, ':', 10).toInt();
     randomMode=getValue(dataIn, ':', 11).toInt();
+    colorHoldTime=getValue(dataIn, ':', 12).toInt();
     
     refresh();   //define as configurações recebidas no dispositivo
       }
@@ -421,6 +427,7 @@ void buttonRead(){
     }
   
   
+int timeToMorph=0;
 
   void loop() {
 buttonRead();
@@ -432,8 +439,13 @@ if(randomMode==1){
 randomBegin();
 
     }
+
+if(timeToMorph==0&&counter==colorHoldTime){
+  timeToMorph=1;
+  counter=0;
+  }  
   
-if(counter==10){
+if(timeToMorph==1&&counter==16-spd){
  
       if(targetR>l2_r){
       l2_r++;
@@ -462,6 +474,10 @@ if(counter==10){
       counter=0;
  }
     counter=counter+1;
+    
+    if(l1_r==targetR&&l1_g==targetG&&l1_b==targetB&&l2_r==targetRs&&l2_g==targetGs&&l2_b==targetBs){//se chegar nas cores desejadas o led para de variar a cor
+      timeToMorph=0;
+      }
   }
 
  
