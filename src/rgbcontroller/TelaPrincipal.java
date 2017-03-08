@@ -103,7 +103,7 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM3","COM4","COM5","COM8","COM9" // Windows
+			"COM3","COM4","COM5","COM8","COM9","COM12" // Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 

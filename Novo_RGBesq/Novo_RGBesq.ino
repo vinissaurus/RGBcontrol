@@ -58,17 +58,23 @@ readReport();
 if(testSequence==1&&! Serial.available()){initialTest();}
 
 readReport();
-if(smoothOn==1)smooth();
-
-if(smoothOn==0)setColor();
+refresh();
 printReport();
 randomSeed(analogRead(A2));
 }
 
+void refresh(){//definir a cor dependendo da configuração do smooth
+  switch(smoothOn){
+    case 0:{setColor();}
+    case 1:{smooth();  }
+  }
+  
+  }
+
 void readReport(){
   //leitura de eeprom para variáveis
 
-  l1_en=EEPROM.read(0);
+l1_en=EEPROM.read(0);
 targetR=EEPROM.read(1);
 targetG=EEPROM.read(2);
 targetB=EEPROM.read(3);
@@ -86,8 +92,6 @@ randomMode=EEPROM.read(11);
   }
 
 void printReport(){
-  
-
 
 report="";
 report+="(reportStatus)[led1:en=";
@@ -213,6 +217,7 @@ void initialTest(){
 
       if(dataIn=="SAVE"){
       saveConfig();
+      refresh();
       }
     if(dataIn=="TEST"){
       initialTest();
@@ -223,12 +228,13 @@ void initialTest(){
     if(dataIn=="REPORT"){
       readReport();
       printReport();
+      refresh();
       }
   if(dataIn=="PING?"){
     Serial.println("PONG!");
     }
 
-    if(dataIn.indexOf(':')!=0){
+    if(dataIn.indexOf(':')!=-1){
         l1_en =getValue(dataIn, ':', 0).toInt();
         
       if(l1_en==0){
@@ -260,17 +266,8 @@ void initialTest(){
     spd=getValue(dataIn, ':', 9).toInt();
     testSequence=getValue(dataIn, ':', 10).toInt();
     randomMode=getValue(dataIn, ':', 11).toInt();
-
-    switch(smoothOn){
-      case 0:{
-        setColor();        
-        }
-      case 1:{
-        smooth();
-        }      
-      }
-
-      
+    
+    refresh();   //define as configurações recebidas no dispositivo
       }
     
 
@@ -304,6 +301,8 @@ void setColor(){//método para definir a cor sem suavizar
     analogWrite(Rs,l2_r);
     analogWrite(Gs,l2_g);
     analogWrite(Bs,l2_b);
+    
+    Serial.println("ready");
   }
 
 void smooth(){//método para definir a cor com suavização
