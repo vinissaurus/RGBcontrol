@@ -162,7 +162,7 @@ void initialTest(){
       targetBs=0;
       setColor();
       spd=1;
-      int waitTime=300;
+      int waitTime=150;
 
       int testCase=0;
     
@@ -467,7 +467,7 @@ if(timeToMorph==1&&counter==50-spd){
       if(targetR<l2_r){
       l2_r--;
       }
-      //l1_r=255-l2_r;
+      l1_r=l2_r;
       
       if(targetG>l2_g){
       l2_g++;
@@ -475,7 +475,7 @@ if(timeToMorph==1&&counter==50-spd){
       if(targetG<l2_g){
       l2_g--;
       }
-      //l1_g=255-l2_g;
+      l1_g=l2_g;
       
       if(targetB>l2_b){
       l2_b++;
@@ -483,7 +483,7 @@ if(timeToMorph==1&&counter==50-spd){
       if(targetB<l2_b){
       l2_b--;
       }
-      //l1_b=255-l2_b;
+      l1_b=l2_b;
       
       counter=0;
       
