@@ -32,6 +32,7 @@ int randomMode=0;
 int colorHoldTime=0;
 int smoothOn=0;
 unsigned int counter=0;
+unsigned int timeToMorph=0;
 
 String report="";
 String dataIn="";
@@ -40,6 +41,7 @@ String dataOut="";
 unsigned int buttonCount=0;
 unsigned int buttonState=0;
 unsigned int buttonCase=0;
+
 
 void setup() {
  Serial.begin(115200);
@@ -285,12 +287,23 @@ void initialTest(){
 
 
 void randomBegin(){
-    targetR=random(0,255);
-    targetG=random(0,255);
-    targetB=random(0,255);
+    targetR=rgbRandom(targetR);
+    targetG=rgbRandom(targetG);
+    targetB=rgbRandom(targetB);
     //Serial.println("Generating random...");
   }
 
+
+int rgbRandom(int x){
+  int param[]={127,63,32,16};
+  
+  if(x<=128){
+    return x+param[random(0,3)];
+    }
+  if(x>128){
+    return x-param[random(0,3)];
+    }    
+  }
 
 void setColor(){//método para definir a cor sem suavizar
     l1_r=targetR;
@@ -427,7 +440,7 @@ void buttonRead(){
     }
   
   
-int timeToMorph=0;
+
 
   void loop() {
 buttonRead();
@@ -436,16 +449,17 @@ listenToPort();
 if(randomMode==1){
 
  if(targetR==l2_r&&targetG==l2_g&&targetB==l2_b){
-randomBegin();
-
+  randomBegin();
+  timeToMorph=0;
+  counter=0;
     }
 
 if(timeToMorph==0&&counter==colorHoldTime){
+  counter=0; 
   timeToMorph=1;
-  counter=0;
   }  
   
-if(timeToMorph==1&&counter==16-spd){
+if(timeToMorph==1&&counter==50-spd){
  
       if(targetR>l2_r){
       l2_r++;
@@ -453,7 +467,7 @@ if(timeToMorph==1&&counter==16-spd){
       if(targetR<l2_r){
       l2_r--;
       }
-      l1_r=255-l2_r;
+      //l1_r=255-l2_r;
       
       if(targetG>l2_g){
       l2_g++;
@@ -461,7 +475,7 @@ if(timeToMorph==1&&counter==16-spd){
       if(targetG<l2_g){
       l2_g--;
       }
-      l1_g=255-l2_g;
+      //l1_g=255-l2_g;
       
       if(targetB>l2_b){
       l2_b++;
@@ -469,15 +483,14 @@ if(timeToMorph==1&&counter==16-spd){
       if(targetB<l2_b){
       l2_b--;
       }
-      l1_b=255-l2_b;
+      //l1_b=255-l2_b;
       
       counter=0;
+      
  }
-    counter=counter+1;
+    counter++;
     
-    if(l1_r==targetR&&l1_g==targetG&&l1_b==targetB&&l2_r==targetRs&&l2_g==targetGs&&l2_b==targetBs){//se chegar nas cores desejadas o led para de variar a cor
-      timeToMorph=0;
-      }
+ 
   }
 
  

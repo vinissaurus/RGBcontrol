@@ -469,13 +469,14 @@
                           <Component id="speedSlider" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="smoothSpeedTextField" min="-2" pref="62" max="-2" attributes="0"/>
                           </Group>
                           <Component id="colorHoldSlider" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="holdTimeLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="colorHoldTimeTextField" min="-2" pref="62" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -486,17 +487,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="smoothSpeedTextField" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="speedSlider" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="holdTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="colorHoldTimeTextField" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="colorHoldSlider" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -509,11 +513,13 @@
             </Component>
             <Component class="javax.swing.JSlider" name="speedSlider">
               <Properties>
-                <Property name="maximum" type="int" value="15"/>
+                <Property name="maximum" type="int" value="50"/>
                 <Property name="minimum" type="int" value="1"/>
                 <Property name="snapToTicks" type="boolean" value="true"/>
+                <Property name="value" type="int" value="10"/>
               </Properties>
               <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="speedSliderStateChanged"/>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="speedSliderMouseReleased"/>
               </Events>
             </Component>
@@ -524,17 +530,29 @@
             </Component>
             <Component class="javax.swing.JSlider" name="colorHoldSlider">
               <Properties>
-                <Property name="value" type="int" value="0"/>
+                <Property name="maximum" type="int" value="10000"/>
+                <Property name="minimum" type="int" value="1"/>
               </Properties>
               <Events>
                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="colorHoldSliderStateChanged"/>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="colorHoldSliderMouseReleased"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="holdTimeLabel">
+            <Component class="javax.swing.JTextField" name="smoothSpeedTextField">
               <Properties>
                 <Property name="text" type="java.lang.String" value=" "/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smoothSpeedTextFieldActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="colorHoldTimeTextField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" "/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorHoldTimeTextFieldActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

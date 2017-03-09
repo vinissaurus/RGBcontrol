@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -402,7 +403,8 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         speedSlider = new javax.swing.JSlider();
         jLabel2 = new javax.swing.JLabel();
         colorHoldSlider = new javax.swing.JSlider();
-        holdTimeLabel = new javax.swing.JLabel();
+        smoothSpeedTextField = new javax.swing.JTextField();
+        colorHoldTimeTextField = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         sendButton = new javax.swing.JButton();
         loadButton = new javax.swing.JButton();
@@ -733,9 +735,15 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
         jLabel1.setText("Smooth speed");
 
-        speedSlider.setMaximum(15);
+        speedSlider.setMaximum(50);
         speedSlider.setMinimum(1);
         speedSlider.setSnapToTicks(true);
+        speedSlider.setValue(10);
+        speedSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                speedSliderStateChanged(evt);
+            }
+        });
         speedSlider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 speedSliderMouseReleased(evt);
@@ -744,7 +752,8 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
         jLabel2.setText("Color hold time");
 
-        colorHoldSlider.setValue(0);
+        colorHoldSlider.setMaximum(10000);
+        colorHoldSlider.setMinimum(1);
         colorHoldSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 colorHoldSliderStateChanged(evt);
@@ -756,7 +765,19 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
             }
         });
 
-        holdTimeLabel.setText(" ");
+        smoothSpeedTextField.setText(" ");
+        smoothSpeedTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smoothSpeedTextFieldActionPerformed(evt);
+            }
+        });
+
+        colorHoldTimeTextField.setText(" ");
+        colorHoldTimeTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                colorHoldTimeTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -768,28 +789,31 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                     .addComponent(speedSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(smoothSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(colorHoldSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(holdTimeLabel)))
+                        .addComponent(colorHoldTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(smoothSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(holdTimeLabel))
+                    .addComponent(colorHoldTimeTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorHoldSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1357,12 +1381,12 @@ consoleInput.requestFocus();
     }//GEN-LAST:event_led2_checkBoxStateChanged
 
     private void speedSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speedSliderMouseReleased
-speed=speedSlider.getMaximum()-speedSlider.getValue();
-if(autoSendCheckBox.isSelected())sendSettings();// TODO add your handling code here:
+if(autoSendCheckBox.isSelected())sendSettings();
+// TODO add your handling code here:
     }//GEN-LAST:event_speedSliderMouseReleased
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-sendSettings();        // TODO add your handling code here:
+if(autoSendCheckBox.isSelected())sendSettings();        // TODO add your handling code here:
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void smoothCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothCheckBoxActionPerformed
@@ -1376,8 +1400,50 @@ sendSettings();        // TODO add your handling code here:
     }//GEN-LAST:event_colorHoldSliderMouseReleased
 
     private void colorHoldSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colorHoldSliderStateChanged
-  holdTimeLabel.setText(""+colorHoldSlider.getValue());        // TODO add your handling code here:
+  colorHoldTimeTextField.setText(""+colorHoldSlider.getValue());
+  colorHoldTime=colorHoldSlider.getValue();
     }//GEN-LAST:event_colorHoldSliderStateChanged
+
+    private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
+ speed=speedSlider.getValue();
+ smoothSpeedTextField.setText(""+speedSlider.getValue());// TODO add your handling code here:
+    }//GEN-LAST:event_speedSliderStateChanged
+
+    private void smoothSpeedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoothSpeedTextFieldActionPerformed
+if(verifyInput(speedSlider.getMinimum(),speedSlider.getMaximum(),smoothSpeedTextField.getText())!=0){
+speed=Integer.parseInt(smoothSpeedTextField.getText());
+speedSlider.setValue(speed);
+}
+if(autoSendCheckBox.isSelected())sendSettings();
+    }//GEN-LAST:event_smoothSpeedTextFieldActionPerformed
+
+    private void colorHoldTimeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorHoldTimeTextFieldActionPerformed
+if(verifyInput(colorHoldSlider.getMinimum(),colorHoldSlider.getMaximum(),colorHoldTimeTextField.getText())!=0){
+colorHoldTime=Integer.parseInt(colorHoldTimeTextField.getText());
+colorHoldSlider.setValue(colorHoldTime);
+}
+if(autoSendCheckBox.isSelected())sendSettings();
+    }//GEN-LAST:event_colorHoldTimeTextFieldActionPerformed
+
+public int verifyInput(int min, int max, String text){
+int answer=0;    
+try{
+answer=Integer.parseInt(text);
+if(answer<min){
+JOptionPane.showMessageDialog(null, "Value must be at least"+min+".", "WATCHOUT!", HEIGHT);
+answer=0;
+}
+if(answer>max){
+JOptionPane.showMessageDialog(null, "Value must not be bigger than"+max+".", "WATCHOUT!", HEIGHT);
+answer=0;
+}
+}
+catch(NumberFormatException nfe){
+JOptionPane.showMessageDialog(null, "Numbers only, pal!", "WATCHOUT!", HEIGHT);
+}
+
+return answer;
+}
 
     
 public void sendSettings(){//    int speed=0;int smooth=0; int testOn=0;
@@ -1430,9 +1496,9 @@ enableEdition(false);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox autoSendCheckBox;
     private javax.swing.JSlider colorHoldSlider;
+    private javax.swing.JTextField colorHoldTimeTextField;
     private javax.swing.JTextField consoleInput;
     private javax.swing.JTextArea consoleOut;
-    private javax.swing.JLabel holdTimeLabel;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -1474,6 +1540,7 @@ enableEdition(false);
     private javax.swing.JButton saveButton;
     private javax.swing.JButton sendButton;
     private javax.swing.JCheckBox smoothCheckBox;
+    private javax.swing.JTextField smoothSpeedTextField;
     private javax.swing.JSlider speedSlider;
     private javax.swing.JCheckBox testCheckBox;
     // End of variables declaration//GEN-END:variables
