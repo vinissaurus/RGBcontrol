@@ -392,6 +392,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         led1_random = new javax.swing.JButton();
         led1_clone = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         smoothCheckBox = new javax.swing.JCheckBox();
@@ -427,6 +431,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         consoleInput = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -682,6 +690,42 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
         jPanel2.add(jPanel4, gridBagConstraints);
 
+        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel8.setLayout(new java.awt.GridBagLayout());
+
+        jTextField1.setText("jTextField1");
+        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0), 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 30.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel8.add(jTextField1, gridBagConstraints);
+
+        jTextField2.setText("jTextField2");
+        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 30.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel8.add(jTextField2, gridBagConstraints);
+
+        jTextField3.setText("jTextField3");
+        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255), 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 30.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel8.add(jTextField3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        jPanel2.add(jPanel8, gridBagConstraints);
+
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Other config"));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -752,8 +796,10 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
 
         jLabel2.setText("Color hold time");
 
-        colorHoldSlider.setMaximum(10000);
+        colorHoldSlider.setMajorTickSpacing(1);
+        colorHoldSlider.setMaximum(255);
         colorHoldSlider.setMinimum(1);
+        colorHoldSlider.setMinorTickSpacing(1);
         colorHoldSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 colorHoldSliderStateChanged(evt);
@@ -892,7 +938,6 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
@@ -1180,6 +1225,24 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel6.add(jButton4, gridBagConstraints);
 
+        jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel9.setLayout(new java.awt.GridBagLayout());
+
+        jTextField4.setText("jTextField1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel9.add(jTextField4, gridBagConstraints);
+
+        jTextField5.setText("jTextField2");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel9.add(jTextField5, gridBagConstraints);
+
+        jTextField6.setText("jTextField3");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel9.add(jTextField6, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1194,6 +1257,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                         .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 214, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 214, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1207,6 +1275,11 @@ public class TelaPrincipal extends JFrame implements SerialPortEventListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -1400,7 +1473,7 @@ if(autoSendCheckBox.isSelected())sendSettings();        // TODO add your handlin
     }//GEN-LAST:event_colorHoldSliderMouseReleased
 
     private void colorHoldSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colorHoldSliderStateChanged
-  colorHoldTimeTextField.setText(""+colorHoldSlider.getValue());
+  colorHoldTimeTextField.setText(""+colorHoldSlider.getValue()*40);
   colorHoldTime=colorHoldSlider.getValue();
     }//GEN-LAST:event_colorHoldSliderStateChanged
 
@@ -1512,9 +1585,17 @@ enableEdition(false);
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JPanel led1_bPanel;
     private javax.swing.JSlider led1_bSlider;
     private javax.swing.JCheckBox led1_checkBox;

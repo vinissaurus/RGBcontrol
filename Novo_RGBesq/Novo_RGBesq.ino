@@ -162,8 +162,72 @@ void initialTest(){
       targetBs=0;
       setColor();
       spd=1;
-      int waitTime=150;
+      int waitTime=500;
+      //teste básico para o RGB em cada canal
+      targetR=255;
+      targetG=0;
+      targetB=0;
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
 
+      targetR=0;
+      targetG=255;
+      targetB=0;
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
+
+      targetR=0;
+      targetG=0;
+      targetB=255;
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
+
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      targetRs=255;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
+
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      targetRs=0;
+      targetGs=255;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
+
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      targetRs=0;
+      targetGs=0;
+      targetBs=255;
+      setColor();
+      delay(waitTime);
+
+      targetR=0;
+      targetG=0;
+      targetB=0;
+      targetRs=0;
+      targetGs=0;
+      targetBs=0;
+      setColor();
+      delay(waitTime);
+
+      waitTime=150;
       int testCase=0;
     
     while(testCase<2){  
@@ -454,7 +518,7 @@ if(randomMode==1){
   counter=0;
     }
 
-if(timeToMorph==0&&counter==colorHoldTime){
+if(timeToMorph==0&&counter==colorHoldTime*40){
   counter=0; 
   timeToMorph=1;
   }  
